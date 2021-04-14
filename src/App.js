@@ -12,9 +12,9 @@ import Main from "./components/main.component";
 function App() {
   return (
     <Router>
-          <BRNavbar />
-          <Main />
-          <Footer />
+      <BRNavbar />
+      <Main />
+      <Footer />
     </Router>
   );
 }

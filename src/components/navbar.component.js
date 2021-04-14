@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Col, Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse';
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
+
 import logo from '../img/brlogo_sm.png';
 
 import '../css/stack-interface.css';
