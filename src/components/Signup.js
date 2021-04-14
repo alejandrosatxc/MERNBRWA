@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Form, Button } from 'react-bootstrap';
 import { useState } from 'react';
-import validator from 'validator';
+import Password from './Password';
 
 
 const Signup = () => {
@@ -59,24 +59,7 @@ const Signup = () => {
                     <Form.Control.Feedback type="invalid">Enter a valid Email</Form.Control.Feedback>
                     { /* TODO Check if email exists in database */ }
                 </Form.Group>
-                <Form.Row>
-                    <Form.Group controlId="signup.password">
-                        <Form.Label srOnly="true">Password</Form.Label>
-                        <Form.Control 
-                            required
-                            type="password" 
-                            placeholder="Password" 
-                        />
-                    </Form.Group>
-                    <Form.Group controlId="signup.confirmpw">
-                        <Form.Label srOnly="true">Confirm Password</Form.Label>
-                        <Form.Control 
-                            required 
-                            type="password" 
-                            placeholder="Confirm Password" 
-                        />
-                    </Form.Group>
-                </Form.Row>
+                <Password />
                 <Button type="submit">Sign Up</Button>
             </Form>
             
