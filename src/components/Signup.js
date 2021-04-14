@@ -1,7 +1,8 @@
 import React from 'react';
 import { Card, Form, Button } from 'react-bootstrap';
 import { useState } from 'react';
-import { FormikProvider } from 'formik';
+import validator from 'validator';
+
 
 const Signup = () => {
 
@@ -10,8 +11,8 @@ const Signup = () => {
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
+            event.preventDefault();
+            event.stopPropagation();
         }
 
         setValidated(true);
@@ -34,7 +35,8 @@ const Signup = () => {
                             type="text" 
                             placeholder="First Name"
                         />
-                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        <Form.Control.Feedback></Form.Control.Feedback>
+                        <Form.Control.Feedback type="invalid">Required</Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group controlId="signup.lastname">
                         <Form.Label srOnly="true">Last Name</Form.Label>
@@ -43,7 +45,8 @@ const Signup = () => {
                             type="text" 
                             placeholder="Last Name" 
                         />
-                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        <Form.Control.Feedback></Form.Control.Feedback>
+                        <Form.Control.Feedback type="invalid">Required</Form.Control.Feedback>
                     </Form.Group>
                 </Form.Row>
                 <Form.Group controlId="signup.email">
@@ -53,6 +56,8 @@ const Signup = () => {
                         type="email" 
                         placeholder="Email Address" 
                     />
+                    <Form.Control.Feedback type="invalid">Enter a valid Email</Form.Control.Feedback>
+                    { /* TODO Check if email exists in database */ }
                 </Form.Group>
                 <Form.Row>
                     <Form.Group controlId="signup.password">
@@ -72,8 +77,9 @@ const Signup = () => {
                         />
                     </Form.Group>
                 </Form.Row>
+                <Button type="submit">Sign Up</Button>
             </Form>
-            <Button type="submit">Sign Up</Button>
+            
             { /* TODO Create links to sign in and reset your passwords*/}
         </Card>
     )
