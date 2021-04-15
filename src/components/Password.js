@@ -40,12 +40,14 @@ const Password = () => {
                     type="password" 
                     placeholder="Password"
                     onChange={setFirst} 
+                    isInvalid={validLength && hasNumber && upperCase && lowerCase && specialChar}
                 />
                 <Form.Text>Valid Length: {validLength ? <span>True</span> : <span>False</span>}</Form.Text>
                 <Form.Text>Has a Number: {hasNumber ? <span>True</span> : <span>False</span>}</Form.Text>
                 <Form.Text>UpperCase: {upperCase ? <span>True</span> : <span>False</span>}</Form.Text>
                 <Form.Text>LowerCase: {lowerCase ? <span>True</span> : <span>False</span>}</Form.Text>
                 <Form.Text>Special Character:{" "} {specialChar ? <span>True</span> : <span>False</span>}</Form.Text>
+                <Form.Control.Feedback type="invalid">Password does not meet requirements</Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="signup.confirmpw">
                 <Form.Label srOnly="true">Confirm Password</Form.Label>
@@ -53,9 +55,11 @@ const Password = () => {
                     required 
                     type="password" 
                     placeholder="Confirm Password"
-                    onChange={setSecond} 
+                    onChange={setSecond}
+                    isValid={match}
                 />
                 <Form.Text>Match: {match ? <span>True</span> : <span>False</span>}</Form.Text>
+                <Form.Control.Feedback type="invalid">Password does not meet requirements</Form.Control.Feedback>
 
             </Form.Group>
         </Form.Row>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
 import Greeting from './greeting.component';
 import Signin from './signin.component';
-import Signup from './Signup';
+import Signup from './FormikSignup';
 
 export default class Main extends Component {
     render() {

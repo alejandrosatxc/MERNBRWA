@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Card } from 'react-bootstrap';
+import { Form, Card, Button } from 'react-bootstrap';
 
 export default class Signin extends Component {
     render() {
@@ -17,7 +17,8 @@ export default class Signin extends Component {
                     <Form.Group controlId="signin.password">
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" placeholder="Password"></Form.Control>
-                    </Form.Group>                            
+                    </Form.Group>
+                    <Button>Sign in</Button>                            
                 </Form>
             </Card>
         );
