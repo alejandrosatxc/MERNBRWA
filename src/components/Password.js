@@ -40,7 +40,6 @@ const Password = () => {
                     type="password" 
                     placeholder="Password"
                     onChange={setFirst} 
-                    isInvalid={validLength && hasNumber && upperCase && lowerCase && specialChar}
                 />
                 <Form.Text>Valid Length: {validLength ? <span>True</span> : <span>False</span>}</Form.Text>
                 <Form.Text>Has a Number: {hasNumber ? <span>True</span> : <span>False</span>}</Form.Text>

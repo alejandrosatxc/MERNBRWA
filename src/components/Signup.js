@@ -1,24 +1,50 @@
-import React from 'react';
-import { Card, Form, Button } from 'react-bootstrap';
-import { useState } from 'react';
-import Password from './Password';
+import React from 'react'
+import { Card, Form, Button, Col } from 'react-bootstrap'
+import { Formik, useFormik, FormikProvider, yupToFormErrors } from 'formik'
+import * as Yup from 'yup'
+import TextInputLiveFeedback from './TextInputLiveFeedback'
 
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const Signup = () => {
-
-    const [validated, setValidated] = useState(false);
-
-    const handleSubmit = (event) => {
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-
-        setValidated(true);
-    };
-
-    return (
+const FormikSignup = () => {
+    const formik = useFormik({
+        initialValues: {
+          firstname: '',
+          lastname: '',
+          email: '',
+          password: '',
+        },
+        onSubmit: async (values) => {
+          await sleep(500);
+          alert(JSON.stringify(values, null, 2));
+        },
+        validationSchema: Yup.object({
+          firstname: Yup.string()
+            .min(2, 'Must be at least 2 characters')
+            .max(30, 'Must be less  than 30 characters')
+            .required('First name is required')
+            .matches(
+              /^[a-zA-Z\-]+$/,
+              'Cannot contain special characters or spaces'
+            ),
+          lastname: Yup.string()
+            .min(2, 'Must be at least 2 characters')
+            .max(30, 'Must be less  than 30 characters')
+            .required('Last name is required')
+            .matches(
+              /^[a-zA-Z\-]+$/,
+              'Cannot contain special characters or spaces'
+            ),
+          email: Yup.string()
+            .email('Invalid email')
+            .required('Required'),
+          password: Yup.string()
+            .min(8, 'Must be at least 8 characters')
+            .required('Required'),
+        }),
+      });
+    
+      return (
         <Card>
             <h3>Create Account</h3>
             <p>
@@ -26,46 +52,43 @@ const Signup = () => {
                 documents that you have purchased or been assigned,
                 online and at your leisure.
             </p>
-            <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                <Form.Row>
-                    <Form.Group controlId="signup.firstname">
-                        <Form.Label srOnly="true">First Name</Form.Label>
-                        <Form.Control
-                            required 
-                            type="text" 
-                            placeholder="First Name"
+            <FormikProvider value={formik}>
+                <Form>
+                    <Form.Row>
+                        <TextInputLiveFeedback
+                        label="First Name"
+                        placeholder="First Name"
+                        id="firstname"
+                        name="firstname"
+                        type="text"
                         />
-                        <Form.Control.Feedback></Form.Control.Feedback>
-                        <Form.Control.Feedback type="invalid">Required</Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group controlId="signup.lastname">
-                        <Form.Label srOnly="true">Last Name</Form.Label>
-                        <Form.Control 
-                            required 
-                            type="text" 
-                            placeholder="Last Name" 
+                        <TextInputLiveFeedback
+                        label="Last Name"
+                        placeholder="Last Name"
+                        id="lastname"
+                        name="lastname"
+                        type="text"
                         />
-                        <Form.Control.Feedback></Form.Control.Feedback>
-                        <Form.Control.Feedback type="invalid">Required</Form.Control.Feedback>
-                    </Form.Group>
-                </Form.Row>
-                <Form.Group controlId="signup.email">
-                    <Form.Label srOnly="true">Email Address</Form.Label>
-                    <Form.Control 
-                        required 
-                        type="email" 
-                        placeholder="Email Address" 
+                    </Form.Row>
+                    <TextInputLiveFeedback
+                    label="Email"
+                    placeholder="Email"
+                    id="email"
+                    name="email"
+                    type="email"
                     />
-                    <Form.Control.Feedback type="invalid">Enter a valid Email</Form.Control.Feedback>
-                    { /* TODO Check if email exists in database */ }
-                </Form.Group>
-                <Password />
-                <Button type="submit">Sign Up</Button>
-            </Form>
-            
-            { /* TODO Create links to sign in and reset your passwords*/}
+                    <TextInputLiveFeedback
+                    label="Password"
+                    placeholder="Password"
+                    id="password"
+                    name="password"
+                    type="password"
+                    />
+                    <Button type="submit">Sign Up</Button>
+                </Form>
+            </FormikProvider>
         </Card>
-    )
+      );
 }
 
-export default Signup
+export default FormikSignup
