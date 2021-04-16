@@ -7,6 +7,10 @@ import TextInputLiveFeedback from './TextInputLiveFeedback'
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const FormikSignup = () => {
+
+    //Form validation is done using formik. The useFormik function defines
+    //the validation schema for each field, their initial values and 
+    //code that runs when the form is submitted
     const formik = useFormik({
         initialValues: {
           firstname: '',
