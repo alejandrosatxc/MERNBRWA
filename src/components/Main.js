@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
-import Greeting from './greeting.component';
-import Signin from './signin.component';
+import Greeting from './Greeting';
+import Signin from './Signin';
 import Signup from './Signup';
 import Usernav from './Usernav'
 import Useraccount from './Useraccount'

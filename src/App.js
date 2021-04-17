@@ -5,9 +5,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/custom.css';
 //import './css/theme.css';
 
-import BRNavbar from "./components/navbar.component";
-import Footer from "./components/footer.component";
-import Main from "./components/main.component";
+import BRNavbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Main from "./components/Main";
 
 function App() {
   return (
