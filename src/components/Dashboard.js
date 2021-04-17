@@ -5,14 +5,14 @@ import Signin from './Signin';
 import Signup from './Signup';
 import Usernav from './Usernav'
 import Useraccount from './Useraccount'
+import Resend from './Resend'
 
-export default class Main extends Component {
+export default class Dashboard extends Component {
     render() {
         return(
             <Container className="main-container">
                 <Container fluid>
-                    <Usernav />
-                    <Useraccount />
+                    <Resend />
                 </Container>
             </Container>
         );
