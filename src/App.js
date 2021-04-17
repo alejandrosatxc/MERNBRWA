@@ -7,13 +7,13 @@ import './css/custom.css';
 
 import BRNavbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Main from "./components/Main";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
     <Router>
       <BRNavbar />
-      <Main />
+      <Dashboard />
       <Footer />
     </Router>
   );
