@@ -1,6 +1,7 @@
 import React from 'react'
-import { Card, Form, Button, Col } from 'react-bootstrap'
-import { Formik, useFormik, FormikProvider, yupToFormErrors } from 'formik'
+import axios from 'axios'
+import { Card, Button, Col } from 'react-bootstrap'
+import { Formik, useFormik, FormikProvider, Form } from 'formik'
 import * as Yup from 'yup'
 import TextInputLiveFeedback from './TextInputLiveFeedback'
 
@@ -13,17 +14,21 @@ const FormikSignup = () => {
     //code that runs when the form is submitted
     const formik = useFormik({
         initialValues: {
-          firstname: '',
-          lastname: '',
+          first_name: '',
+          last_name: '',
           email: '',
           password: '',
         },
         onSubmit: async (values) => {
-          await sleep(500);
-          alert(JSON.stringify(values, null, 2));
+          await new Promise((r) => setTimeout(r, 500));
+          const newUser = JSON.stringify(values)
+          console.log(newUser);
+          
+          axios.post('http://localhost:5000/users/add', values)
+            .then(res => console.log(res.data));
         },
         validationSchema: Yup.object({
-          firstname: Yup.string()
+          first_name: Yup.string()
             .min(2, 'Must be at least 2 characters')
             .max(30, 'Must be less  than 30 characters')
             .required('First name is required')
@@ -31,7 +36,7 @@ const FormikSignup = () => {
               /^[a-zA-Z\-]+$/,
               'Cannot contain special characters or spaces'
             ),
-          lastname: Yup.string()
+          last_name: Yup.string()
             .min(2, 'Must be at least 2 characters')
             .max(30, 'Must be less  than 30 characters')
             .required('Last name is required')
@@ -46,7 +51,7 @@ const FormikSignup = () => {
             .min(8, 'Must be at least 8 characters')
             .required('Required'),
         }),
-      });
+    });
     
       return (
         <Card>
@@ -58,37 +63,35 @@ const FormikSignup = () => {
             </p>
             <FormikProvider value={formik}>
                 <Form>
-                    <Form.Row>
-                        <TextInputLiveFeedback
-                        label="First Name"
-                        placeholder="First Name"
-                        id="firstname"
-                        name="firstname"
-                        type="text"
-                        />
-                        <TextInputLiveFeedback
-                        label="Last Name"
-                        placeholder="Last Name"
-                        id="lastname"
-                        name="lastname"
-                        type="text"
-                        />
-                    </Form.Row>
-                    <TextInputLiveFeedback
+                  <TextInputLiveFeedback
+                    label="First Name"
+                    placeholder="First Name"
+                    id="first_name"
+                    name="first_name"
+                    type="text"
+                  />
+                  <TextInputLiveFeedback
+                    label="Last Name"
+                    placeholder="Last Name"
+                    id="last_name"
+                    name="last_name"
+                    type="text"
+                  />
+                  <TextInputLiveFeedback
                     label="Email"
                     placeholder="Email"
                     id="email"
                     name="email"
                     type="email"
                     />
-                    <TextInputLiveFeedback
+                  <TextInputLiveFeedback
                     label="Password"
                     placeholder="Password"
                     id="password"
                     name="password"
                     type="password"
                     />
-                    <Button type="submit">Sign Up</Button>
+                  <button type="submit">Sign Up</button>
                 </Form>
             </FormikProvider>
         </Card>
