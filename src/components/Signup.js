@@ -5,6 +5,9 @@ import { Formik, useFormik, FormikProvider, Form } from 'formik'
 import * as Yup from 'yup'
 import TextInputLiveFeedback from './TextInputLiveFeedback'
 
+var generator = require('generate-password');
+
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const FormikSignup = () => {
@@ -21,9 +24,15 @@ const FormikSignup = () => {
         },
         onSubmit: async (values) => {
           await new Promise((r) => setTimeout(r, 500));
+          values.emailverifycode = generator.generate({
+            length: 20,
+            numbers: true
+          })
+          values.active = 1
+          values.accesslevel = 0
           const newUser = JSON.stringify(values)
           console.log(newUser);
-          
+
           axios.post('http://localhost:5000/users/add', values)
             .then(res => console.log(res.data));
         },
