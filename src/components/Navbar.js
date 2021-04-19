@@ -8,7 +8,7 @@ import '../css/stack-interface.css';
 export default class BRNavbar extends Component {
     render () {
         return(
-            <Navbar id="menu1" className="lawnavbg" fixed="top" bg="light" expand="lg">
+            <Navbar id="menu1" className="lawnavbg" bg="light" expand="lg">
                 <Navbar.Brand href="#home">
                     <img className="logo" alt="logo" src={logo} />
                 </Navbar.Brand>
