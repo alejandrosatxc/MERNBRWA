@@ -12,7 +12,7 @@ export default class Dashboard extends Component {
         return(
             <Container className="main-container">
                 <Container fluid>
-                    <Resend />
+                    <Signup />
                 </Container>
             </Container>
         );
