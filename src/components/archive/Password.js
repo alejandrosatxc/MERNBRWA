@@ -8,6 +8,7 @@ const Password = () => {
     const [password, setPassword] = useState({
         firstPassword: "",
         secondPassword: "",
+        passwordHash: "",
     });
 
     const [
@@ -29,7 +30,6 @@ const Password = () => {
     const setSecond = (event) => {
         setPassword({ ...password, secondPassword: event.target.value });
     };
-    
 
     return (
         <Form.Row>

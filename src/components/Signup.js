@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import { Card, Button, Col } from 'react-bootstrap'
 import { Formik, useFormik, FormikProvider, Form } from 'formik'
@@ -10,11 +10,26 @@ var generator = require('generate-password');
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+const generateSalt = (length) => {
+
+  var result           = [];
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+
+  for ( var i = 0; i < length; i++ ) {
+    result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
+  }
+  return result.join('');
+}
+
 const FormikSignup = () => {
 
     //Form validation is done using formik. The useFormik function defines
     //the validation schema for each field, their initial values and 
     //code that runs when the form is submitted
+
+    const [salt, setSalt] = useState(generateSalt(20)) //Generate a unique salt for each user
+    
     const formik = useFormik({
         initialValues: {
           first_name: '',
@@ -24,16 +39,18 @@ const FormikSignup = () => {
         },
         onSubmit: async (values) => {
           await new Promise((r) => setTimeout(r, 500));
-          values.emailverifycode = generator.generate({
-            length: 20,
-            numbers: true
-          })
-          values.active = 1
-          values.accesslevel = 0
-          const newUser = JSON.stringify(values)
+          let newUser = {
+            ...values
+          }
+          const hash = require("crypto")
+            .createHash("sha256")
+            .update(newUser.password.concat(salt))
+            .digest("hex");
+          newUser.hash = hash
+          newUser.salt = salt
+          delete newUser.password
           console.log(newUser);
-
-          axios.post('http://localhost:5000/users/add', values)
+          axios.post('http://localhost:5000/users/add', newUser)
             .then(res => console.log(res.data));
         },
         validationSchema: Yup.object({
