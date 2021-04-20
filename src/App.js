@@ -16,9 +16,9 @@ import Signin from './components/Signin'
 function App() {
   return (
     <Router>
-        <BRNavbar/>
-        <Portal />       
-        <Footer />
+      <BRNavbar/>
+      <Portal />       
+      <Footer />
     </Router>
   );
 }
