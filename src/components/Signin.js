@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import { Form, Card, Button } from 'react-bootstrap';
 
 export default class Signin extends Component {
@@ -18,7 +19,9 @@ export default class Signin extends Component {
                         <Form.Label srOnly="true">Password</Form.Label>
                         <Form.Control type="password" placeholder="Password"></Form.Control>
                     </Form.Group>
-                    <Button>Sign in</Button>                            
+                    <Link to="/dashboard" >
+                        <Button>Sign in</Button>       
+                    </Link>                     
                 </Form>
             </Card>
         );
