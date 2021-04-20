@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
-
 import logo from '../img/brlogo_sm.png';
+
+
 
 import '../css/stack-interface.css';
 
@@ -10,7 +11,11 @@ export default class BRNavbar extends Component {
         return(
             <Navbar id="menu1" className="lawnavbg" bg="light" expand="lg">
                 <Navbar.Brand href="#home">
-                    <img className="logo" alt="logo" src={logo} />
+                    <img 
+                    src={logo}
+                    width="140"
+                    className="logo" 
+                    alt="logo"  />
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">

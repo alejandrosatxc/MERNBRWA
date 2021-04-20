@@ -10,11 +10,9 @@ import Resend from './Resend'
 export default class Dashboard extends Component {
     render() {
         return(
-            <Container className="main-container">
-                <Container fluid>
-                    <Signup />
-                </Container>
-            </Container>
+            
+            <Signup />
+                
         );
     }
 }
