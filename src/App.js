@@ -5,7 +5,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 //import './css/custom.css';
 //import './css/theme.css';
 
-import BRNavbar from "./components/Navbar";
+import BRNavbar from "./components/BRNavbar";
 import Footer from "./components/Footer";
 import Dashboard from "./components/Dashboard";
 import Portal from './components/Portal'
