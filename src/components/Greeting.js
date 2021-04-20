@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import { Card, Button } from 'react-bootstrap';
 
 export default class Greeting extends Component {
+
     render() {
         return(
-            
             <Card id="Greeting">
                 <h3> User Portal</h3>
                 <p>
@@ -16,7 +17,9 @@ export default class Greeting extends Component {
 
                     Sign In or Create an account to begin.
                 </p>
-                <Button>Create an Account</Button>
+                <Link to="/signup">
+                    <Button>Create an Account</Button>
+                </Link>
             </Card>
         );
     }

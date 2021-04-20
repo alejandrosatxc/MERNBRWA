@@ -50,7 +50,7 @@ const FormikSignup = () => {
           newUser.salt = salt
           delete newUser.password
           console.log(newUser);
-          axios.post('https://bell-ripper-web-app.herokuapp.com/users/add', newUser)
+          axios.post('https://bell-ripper-web-app/users/add', newUser)
             .then(res => console.log(res.data));
         },
         validationSchema: Yup.object({
@@ -91,33 +91,29 @@ const FormikSignup = () => {
                 <Form>
                   <TextInputLiveFeedback
                     label="First Name"
-                    placeholder="First Name"
                     id="first_name"
                     name="first_name"
                     type="text"
                   />
                   <TextInputLiveFeedback
                     label="Last Name"
-                    placeholder="Last Name"
                     id="last_name"
                     name="last_name"
                     type="text"
                   />
                   <TextInputLiveFeedback
                     label="Email"
-                    placeholder="Email"
                     id="email"
                     name="email"
                     type="email"
                     />
                   <TextInputLiveFeedback
                     label="Password"
-                    placeholder="Password"
                     id="password"
                     name="password"
                     type="password"
                     />
-                  <button type="submit">Sign Up</button>
+                  <button className="btn btn-primary" type="submit">Sign Up</button>
                 </Form>
             </FormikProvider>
         </Card>

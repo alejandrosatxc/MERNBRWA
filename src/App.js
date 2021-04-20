@@ -1,7 +1,8 @@
 import './App.css';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container, Row, Col } from 'react-bootstrap'
+import { useState } from 'react'
 //import './css/custom.css';
 //import './css/theme.css';
 
@@ -14,11 +15,21 @@ import Signup from './components/Signup'
 import Signin from './components/Signin'
 
 function App() {
+
+  const [session, setSession] = useState('inactive')
+
+  
   return (
     <Router>
       <BRNavbar/>
-      <Portal />       
+      <Container className="main-container" fluid>
+        <Switch>
+          <Route exact path="/" component={Portal} />
+          <Route path="/signup" component={Signup} />
+        </Switch>
+      </Container>       
       <Footer />
+      
     </Router>
   );
 }
