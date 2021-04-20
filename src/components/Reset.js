@@ -20,14 +20,14 @@ const Reset = () => {
                       id="email"
                       type="email"
                     />
-                    <button type="submit">Send Activation Email</button>
+                    <button className="btn btn-primary" type="submit">Send Activation Email</button>
                 </Form>
             </Formik>
             <span class="type--fine-print block">Don't have an account yet?
-			    <a href="signup.php">Create an account</a>
+			    <a href="signup.php"> Create an account</a>
             </span>
             <span class="type--fine-print block">Forgot your username or password?
-                <a href="reset.php">Reset your password</a>
+                <a href="reset.php"> Reset your password</a>
             </span>
         </Card>
     )
