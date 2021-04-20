@@ -5,6 +5,9 @@ import { Formik, useFormik, FormikProvider, Form } from 'formik'
 import * as Yup from 'yup'
 import TextInputLiveFeedback from './TextInputLiveFeedback'
 
+var generator = require('generate-password');
+
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const generateSalt = (length) => {
@@ -47,7 +50,7 @@ const FormikSignup = () => {
           newUser.salt = salt
           delete newUser.password
           console.log(newUser);
-          axios.post('http://localhost:5000/users/add', newUser)
+          axios.post('https://bell-ripper-web-app.herokuapp.com/users/add', newUser)
             .then(res => console.log(res.data));
         },
         validationSchema: Yup.object({
