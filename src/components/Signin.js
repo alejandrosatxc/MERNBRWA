@@ -21,7 +21,8 @@ export default class Signin extends Component {
                     </Form.Group>
                     <Link to="/dashboard" >
                         <Button>Sign in</Button>       
-                    </Link>                     
+                    </Link>
+                    <p>Forgot your password? Click <Link to="/reset">here to reset</Link>  your password</p>                     
                 </Form>
             </Card>
         );

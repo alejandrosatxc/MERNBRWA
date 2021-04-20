@@ -10,6 +10,7 @@ import BRNavbar from "./components/BRNavbar";
 import Footer from "./components/Footer";
 import Dashboard from "./components/Dashboard";
 import Portal from './components/Portal'
+import Reset from './components/Reset'
 import Greeting from './components/Greeting'
 import Signup from './components/Signup'
 import Signin from './components/Signin'
@@ -26,6 +27,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Portal} />
           <Route path="/signup" component={Signup} />
+          <Route path="/reset" component={Reset} />
           <Route path="/dashboard" component={Dashboard} />
         </Switch>
       </Container>       
