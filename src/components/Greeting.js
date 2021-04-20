@@ -5,7 +5,7 @@ export default class Greeting extends Component {
     render() {
         return(
             
-            <Card>
+            <Card id="Greeting">
                 <h3> User Portal</h3>
                 <p>
                     The User Portal allows you to fill out forms so that your documents may be generated

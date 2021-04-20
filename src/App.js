@@ -18,7 +18,7 @@ function App() {
     <Router>
       
         <BRNavbar/>
-        <Container fluid>
+        <Container className="main-container" fluid>
         <Row>
           <Col>
             <Greeting />
