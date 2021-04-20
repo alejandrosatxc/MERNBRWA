@@ -16,21 +16,9 @@ import Signin from './components/Signin'
 function App() {
   return (
     <Router>
-      
         <BRNavbar/>
-        <Container className="main-container" fluid>
-        <Row>
-          <Col>
-            <Greeting />
-          </Col>
-          <Col>
-            <Signin />
-          </Col>
-        </Row>
-        <Row>
-          <Footer />
-        </Row>
-      </Container>
+        <Portal />       
+        <Footer />
     </Router>
   );
 }
