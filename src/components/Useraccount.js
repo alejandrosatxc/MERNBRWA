@@ -77,6 +77,20 @@ const Useraccount = ({...props}) => {
                 name="state"
                 type="text"
               />
+              <TextInputLiveFeedBack
+                label="Zip"
+                placeholder="Zip"
+                id="zip"
+                name="zip"
+                type="text"
+              />
+              <TextInputLiveFeedBack
+                label="Phone"
+                placeholder="Phone"
+                id="phone"
+                name="phone"
+                type="text"
+              />
             </Form>
           </Formik>
         </Card>
