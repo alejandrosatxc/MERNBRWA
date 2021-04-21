@@ -1,35 +1,37 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Card } from 'react-bootstrap'
 import { Formik, Form } from 'formik'
-import TextInputLiveFeedback from './TextInputLiveFeedback'
+import TextInputLiveFeedBack from './TextInputLiveFeedback'
 
 const Reset = () => {
     return (
         <Card>
-            <h2>Activate Account</h2>
+            <h2>Reset your password</h2>
             <p>
-                To have an activation link sent to you, enter the email address
-                you registered with below.
+                Please enter your email address and a password reset
+                link will be sent to you.
             </p>
             <Formik>
-                <Form>
-                    <TextInputLiveFeedback
-                      label="Email"
-                      placeholder="Email"
-                      name="email"
+                <Form>                    
+                    <TextInputLiveFeedBack 
+                      label="Email Address"
+                      placeholder="Email Address"
                       id="email"
+                      name="email"
                       type="email"
                     />
-                    <button className="btn btn-primary" type="submit">Send Activation Email</button>
+                    <button className="btn btn-primary" type="submit">Reset Password</button>
                 </Form>
             </Formik>
+            <span>
+                Ready to sign in?
+                <Link to="/"> Return to the Sign In page</Link>
+            </span>
             <span class="type--fine-print block">Don't have an account yet?
-			    <a href="signup.php"> Create an account</a>
-            </span>
-            <span class="type--fine-print block">Forgot your username or password?
-                <a href="reset.php"> Reset your password</a>
-            </span>
-        </Card>
+			    <Link to="/signup"> Create an account</Link>
+		    </span>
+        </Card>        
     )
 }
 

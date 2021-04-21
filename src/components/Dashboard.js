@@ -6,7 +6,7 @@ import Signin from './Signin';
 import Signup from './Signup';
 import Usernav from './Usernav'
 import Useraccount from './Useraccount'
-import Resend from './Resend'
+import Resend from './Reset'
 import Survey from './Survey'
 
 export default class Dashboard extends Component {

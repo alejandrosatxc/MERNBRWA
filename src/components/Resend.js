@@ -1,36 +1,40 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Card } from 'react-bootstrap'
 import { Formik, Form } from 'formik'
-import TextInputLiveFeedBack from './TextInputLiveFeedback'
+import TextInputLiveFeedback from './TextInputLiveFeedback'
 
 const Resend = () => {
     return (
         <Card>
-            <h2>Reset your password</h2>
+            <h2>Activate Account</h2>
             <p>
-                Please enter your email address and a password reset
-                link will be sent to you.
+                To have an activation link sent to you, enter the email address
+                you registered with below.
             </p>
             <Formik>
-                <Form>                    
-                    <TextInputLiveFeedBack 
-                      label="Email Address"
-                      placeholder="Email Address"
-                      id="email"
+                <Form>
+                    <TextInputLiveFeedback
+                      label="Email"
+                      placeholder="Email"
                       name="email"
+                      id="email"
                       type="email"
                     />
-                    <button type="submit">Reset Password</button>
+                    <button className="btn btn-primary" type="submit">Send Activation Email</button>
                 </Form>
             </Formik>
-            <span>
-                Ready to sign in?
-                <a href="#">Return to the Sign In page</a>
-            </span>
             <span class="type--fine-print block">Don't have an account yet?
-			    <a href="#">Create an account</a>
-		    </span>
-        </Card>        
+			    <Link to="/signup">
+                     Create an account
+                </Link>
+            </span>
+            <span class="type--fine-print block">Forgot your username or password?
+                <Link to="/reset">
+                     Reset your password
+                </Link>
+            </span>
+        </Card>
     )
 }
 
