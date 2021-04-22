@@ -5,9 +5,6 @@ import { Formik, useFormik, FormikProvider, Form } from 'formik'
 import * as Yup from 'yup'
 import TextInputLiveFeedback from './TextInputLiveFeedback'
 
-var generator = require('generate-password');
-
-
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const generateSalt = (length) => {
