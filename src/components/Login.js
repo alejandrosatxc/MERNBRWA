@@ -8,8 +8,8 @@ import axios from 'axios'
 //This might need to be recoded to work as a hook later on
 const loginUser = (credentials) => {
     const promise = axios.post('http://localhost:5000/login', credentials)
-    const dataPromise = promise.then((res) => res.data)
-    return dataPromise
+    const token = promise.then((res) => res.data)
+    return token
 }
 //Might need to handle situation where the component unmounts beofre a promise resolves
 const Login = ({setToken}) => {
