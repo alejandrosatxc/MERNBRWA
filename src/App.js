@@ -22,7 +22,7 @@ function App() {
         {/* token defines loggedin or logged out, show portal if loggedout, show dash if logged in */}
         {token
           ? <Dashboard /> 
-          : <Welcome /> 
+          : <Welcome setToken={setToken} /> 
         }
       </Container>       
       <Footer />
