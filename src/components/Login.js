@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Card, Button } from 'react-bootstrap'
+import { Form, Card, Button, Row, Col } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 //This might need to be recoded to work as a hook later on
@@ -32,6 +32,8 @@ const Login = ({setToken}) => {
 
     return(
         <Card id="Login">
+          <Row>
+           <Col>
             <h3> User Portal</h3>
             <p>
                 The User Portal allows you to fill out forms so that your documents may be generated
@@ -45,6 +47,8 @@ const Login = ({setToken}) => {
             <Link to="/signup">
                 <Button>Create an Account</Button>
             </Link>
+           </Col>
+           <Col>
             <h3>Already have an account?</h3>
             <p>
                 Sign in to fill out forms and manage your account.
@@ -69,6 +73,8 @@ const Login = ({setToken}) => {
                 <Button type="submit">Sign in</Button>       
                 <p>Forgot your password? Click <Link to="/reset">here to reset</Link>  your password</p>                     
             </Form>
+           </Col>
+          </Row>
         </Card>
     );
 
