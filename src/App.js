@@ -15,25 +15,23 @@ import Resend from './components/Resend'
 import Greeting from './components/Greeting'
 import Signup from './components/Signup'
 import Signin from './components/Signin'
+import Welcome from './components/Welcome'
 
 function App() {
 
-  const [session, setSession] = useState('inactive')
-
+  const [token, setToken] = useState(false);
   
   return (
     <Router>
       <BRNavbar/>
       <Container className="main-container" fluid>
-        <Switch>
-          <Route exact path="/" component={Portal} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/reset" component={Reset} />
-          <Route path="/dashboard" component={Dashboard} />
-        </Switch>
+        {/* token defines loggedin or logged out, show portal if loggedout, show dash if logged in */}
+        {token 
+          ? <Dashboard /> 
+          : <Welcome /> 
+        }
       </Container>       
       <Footer />
-      
     </Router>
   );
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Container, Row, Col } from 'react-bootstrap';
 import Greeting from './Greeting';
 import Signin from './Signin';
@@ -12,6 +12,7 @@ import Survey from './Survey'
 export default class Dashboard extends Component {
     render() {
         return(
+          <Router>  
             <Row>
                 <Col>
                     <Usernav/>
@@ -23,6 +24,7 @@ export default class Dashboard extends Component {
                   </Switch>
                 </Col>
             </Row>
+          </Router>
         );
     }
 }
