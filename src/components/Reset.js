@@ -28,7 +28,7 @@ const Reset = () => {
                 Ready to sign in?
                 <Link to="/"> Return to the Sign In page</Link>
             </span>
-            <span class="type--fine-print block">Don't have an account yet?
+            <span className="type--fine-print block">Don't have an account yet?
 			    <Link to="/signup"> Create an account</Link>
 		    </span>
         </Card>        
