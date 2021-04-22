@@ -10,7 +10,7 @@ const Portal = () => {
           <Col>
             <Greeting />
           </Col>
-          <Col>
+          <Col sm="auto">
             <Signin />
           </Col>
         </Row>
