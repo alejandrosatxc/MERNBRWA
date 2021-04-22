@@ -4,17 +4,12 @@ import { Form, Card, Button, Row, Col } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import Signup from './Signup'
 import Reset from './Reset'
-
+import axios from 'axios'
 //This might need to be recoded to work as a hook later on
-async function loginUser(credentials) {
-    return fetch('http://localhost:5000/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type' : 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    })
-    .then(data => console.log(data))
+const loginUser = (credentials) => {
+    const promise = axios.post('http://localhost:5000/login', credentials)
+    const dataPromise = promise.then((res) => res.data)
+    return dataPromise
 }
 //Might need to handle situation where the component unmounts beofre a promise resolves
 const Login = ({setToken}) => {
@@ -23,8 +18,7 @@ const Login = ({setToken}) => {
     const [password, setPassword] = useState();
 
     const handleSubmit = async e => {
-        e.PreventDefault();
-        console.log("heres a log" )
+        e.preventDefault();
         const token = await loginUser({
             email,
             password
