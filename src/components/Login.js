@@ -3,11 +3,31 @@ import { Link } from 'react-router-dom'
 import { Form, Card, Button } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
+//This might need to be recoded to work as a hook later on
+async function loginUser(credentials) {
+    return fetch('http://localhost:5000/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify(credentials)
+    })
+    .then(data => data.json())
+}
+//Might need to handle situation where the component unmounts beofre a promise resolves
 const Login = ({setToken}) => {
 
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
+    const handleSubmit = async e => {
+        e.PreventDefault();
+        const token = await loginUser({
+            email,
+            password
+        });
+        setToken(token);
+    }
 
     return(
         <Card id="Login">
@@ -15,7 +35,7 @@ const Login = ({setToken}) => {
             <p>
                 Sign in to fill out forms and manage your account.
             </p>
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="signin.email">
                     <Form.Label srOnly="True">Email Address</Form.Label>
                     <Form.Control 
