@@ -1,8 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { useField } from 'formik';
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const TextInputLiveFeedback = ({ label, helpText, placeholder, ...props }) => {
   const [field, meta] = useField(props);
