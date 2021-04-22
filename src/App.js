@@ -10,6 +10,7 @@ import BRNavbar from "./components/BRNavbar";
 import Footer from "./components/Footer";
 import Dashboard from "./components/Dashboard";
 import Welcome from './components/Welcome'
+import Login from './components/Login'
 
 function App() {
 
@@ -22,7 +23,7 @@ function App() {
         {/* token defines loggedin or logged out, show portal if loggedout, show dash if logged in */}
         {token
           ? <Dashboard /> 
-          : <Welcome setToken={setToken} /> 
+          : <Login setToken={setToken} /> 
         }
       </Container>       
       <Footer />
