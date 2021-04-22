@@ -24,7 +24,12 @@ const surveysRouter = require('./routes/surveys');
 
 app.use('/users', usersRouter);
 app.use('/surveys', surveysRouter);
-//app.use('/homepage', homepageRouter);
+
+app.use('/login', (req, res) => {
+    res.send({
+        token: 'test123'
+    })
+});
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
