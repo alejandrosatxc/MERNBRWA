@@ -9,12 +9,6 @@ import { useState } from 'react'
 import BRNavbar from "./components/BRNavbar";
 import Footer from "./components/Footer";
 import Dashboard from "./components/Dashboard";
-import Portal from './components/Portal'
-import Reset from './components/Reset'
-import Resend from './components/Resend'
-import Greeting from './components/Greeting'
-import Signup from './components/Signup'
-import Signin from './components/Signin'
 import Welcome from './components/Welcome'
 
 function App() {

@@ -1,5 +1,5 @@
 import React from 'react'
-import Signin from './Signin'
+import Login from './Login'
 import Greeting from './Greeting'
 import { Container, Row, Col, Card } from 'react-bootstrap'
 import { BrowserRouter as Router } from 'react-router-dom'
@@ -11,7 +11,7 @@ const Portal = () => {
             <Greeting />
           </Col>
           <Col>
-            <Signin />
+            <Login />
           </Col>
         </Row>
     )
