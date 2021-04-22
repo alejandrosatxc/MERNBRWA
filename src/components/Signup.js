@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { Card, Button, Col } from 'react-bootstrap'
-import { Formik, useFormik, FormikProvider, Form } from 'formik'
+import { Card } from 'react-bootstrap'
+import {  useFormik, FormikProvider, Form } from 'formik'
 import * as Yup from 'yup'
 import TextInputLiveFeedback from './TextInputLiveFeedback'
-
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const generateSalt = (length) => {
 
@@ -25,7 +23,7 @@ const FormikSignup = () => {
     //the validation schema for each field, their initial values and 
     //code that runs when the form is submitted
 
-    const [salt, setSalt] = useState(generateSalt(20)) //Generate a unique salt for each user
+    const [salt, setSalt] = useState('') //Generate a unique salt for each user
     
     const formik = useFormik({
         initialValues: {
@@ -44,7 +42,7 @@ const FormikSignup = () => {
             .update(newUser.password.concat(salt))
             .digest("hex");
           newUser.hash = hash
-          newUser.salt = salt
+          newUser.salt = setSalt(generateSalt(20))
           delete newUser.password
           console.log(newUser);
           axios.post('https://bell-ripper-web-app/users/add', newUser)
@@ -56,7 +54,7 @@ const FormikSignup = () => {
             .max(30, 'Must be less  than 30 characters')
             .required('First name is required')
             .matches(
-              /^[a-zA-Z\-]+$/,
+              /^[a-zA-Z-]+$/,
               'Cannot contain special characters or spaces'
             ),
           last_name: Yup.string()
@@ -64,7 +62,7 @@ const FormikSignup = () => {
             .max(30, 'Must be less  than 30 characters')
             .required('Last name is required')
             .matches(
-              /^[a-zA-Z\-]+$/,
+              /^[a-zA-Z-]+$/,
               'Cannot contain special characters or spaces'
             ),
           email: Yup.string()
