@@ -11,9 +11,17 @@ import Footer from "./components/Footer";
 import Dashboard from "./components/Dashboard";
 import Login from './components/Login'
 
+const setToken = (userToken) => {
+
+}
+
+const getToken = () => {
+  
+}
+
 function App() {
 
-  const [token, setToken] = useState(false);
+  const token = getToken();
   
   return (
     <Router>
@@ -21,7 +29,7 @@ function App() {
       <Container className="main-container">
         {/* token defines loggedin or logged out, show portal if loggedout, show dash if logged in */}
         {token
-          ? <Route path="/dashboard" component={Dashboard} />
+          ? <Route path="/" component={Dashboard} />
           : <Login setToken={setToken} /> 
         }
       </Container>       
