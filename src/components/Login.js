@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import { Form, Card, Button } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
-const Signin = ({setToken}) => {
+const Login = ({setToken}) => {
     
     return(
-        <Card id="Signin">
+        <Card id="Login">
             <h3>Already have an account?</h3>
             <p>
                 Sign in to fill out forms and manage your account.
@@ -28,4 +28,8 @@ const Signin = ({setToken}) => {
         </Card>
     );
 
+}
+
+Login.propTypes = {
+    setToken: PropTypes.func.isRequired
 }
