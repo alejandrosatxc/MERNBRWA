@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container } from 'react-bootstrap'
 import { useState } from 'react'
@@ -9,7 +9,6 @@ import { useState } from 'react'
 import BRNavbar from "./components/BRNavbar";
 import Footer from "./components/Footer";
 import Dashboard from "./components/Dashboard";
-import Welcome from './components/Welcome'
 import Login from './components/Login'
 
 function App() {
@@ -22,7 +21,7 @@ function App() {
       <Container className="main-container">
         {/* token defines loggedin or logged out, show portal if loggedout, show dash if logged in */}
         {token
-          ? <Dashboard /> 
+          ? <Route path="/dashboard" component={Dashboard} />
           : <Login setToken={setToken} /> 
         }
       </Container>       

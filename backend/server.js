@@ -28,7 +28,7 @@ app.use('/surveys', surveysRouter);
 app.use('/login', (req, res) => {
     res.send({
         token: 'test123'
-    })
+    });
 });
 
 app.listen(port, () => {
