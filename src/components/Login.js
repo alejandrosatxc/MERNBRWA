@@ -33,3 +33,5 @@ const Login = ({setToken}) => {
 Login.propTypes = {
     setToken: PropTypes.func.isRequired
 }
+
+export default Login
