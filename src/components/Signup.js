@@ -15,8 +15,8 @@ const FormikSignup = () => {
     
     const formik = useFormik({
         initialValues: {
-          first_name: '',
-          last_name: '',
+          firstName: '',
+          lastName: '',
           email: '',
           password: '',
         },
@@ -27,7 +27,7 @@ const FormikSignup = () => {
             .then(res => console.log(res.data));
         },
         validationSchema: Yup.object({
-          first_name: Yup.string()
+          firstName: Yup.string()
             .min(2, 'Must be at least 2 characters')
             .max(30, 'Must be less  than 30 characters')
             .required('First name is required')
@@ -35,7 +35,7 @@ const FormikSignup = () => {
               /^[a-zA-Z-]+$/,
               'Cannot contain special characters or spaces'
             ),
-          last_name: Yup.string()
+          lastName: Yup.string()
             .min(2, 'Must be at least 2 characters')
             .max(30, 'Must be less  than 30 characters')
             .required('Last name is required')
@@ -64,14 +64,14 @@ const FormikSignup = () => {
                 <Form>
                   <TextInputLiveFeedback
                     label="First Name"
-                    id="first_name"
-                    name="first_name"
+                    id="firstName"
+                    name="firstName"
                     type="text"
                   />
                   <TextInputLiveFeedback
                     label="Last Name"
-                    id="last_name"
-                    name="last_name"
+                    id="lastName"
+                    name="lastName"
                     type="text"
                   />
                   <TextInputLiveFeedback
