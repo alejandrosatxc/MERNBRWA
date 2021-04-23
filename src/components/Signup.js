@@ -10,8 +10,6 @@ const FormikSignup = () => {
     //Form validation is done using formik. The useFormik function defines
     //the validation schema for each field, their initial values and 
     //code that runs when the form is submitted
-
-    const [salt, setSalt] = useState('') //Generate a unique salt for each user
     
     const formik = useFormik({
         initialValues: {
