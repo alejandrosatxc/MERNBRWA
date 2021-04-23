@@ -5,12 +5,23 @@ import {  useFormik, FormikProvider, Form } from 'formik'
 import * as Yup from 'yup'
 import TextInputLiveFeedback from './TextInputLiveFeedback'
 
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { register } from '../actions/authActions'
+
 const FormikSignup = () => {
 
     //Form validation is done using formik. The useFormik function defines
     //the validation schema for each field, their initial values and 
     //code that runs when the form is submitted
     
+/*
+    static propTypes = {
+      isAuthenticated: PropTypes.bool,
+      error: PropTypes.object.isRequired,
+      register: PropTypes.func.isRequired  
+    }
+*/
     const formik = useFormik({
         initialValues: {
           firstName: '',
@@ -91,4 +102,12 @@ const FormikSignup = () => {
       );
 }
 
-export default FormikSignup
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  error: state.error
+})
+
+export default connect(
+  mapStateToProps,
+  { register }
+)(FormikSignup)
