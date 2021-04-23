@@ -18,13 +18,14 @@ connection.once('open', () => {
     console.log("MondoDb database connection established successfully");
 })
 
-const usersRouter = require('./routes/users');
-const surveysRouter = require('./routes/surveys');
-const loginRouter = require('./routes/login');
+const usersRouter = require('./routes/api/users');
+const surveysRouter = require('./routes/api/surveys');
+const authRouter = require('./routes/api/auth');
 
-app.use('/users', usersRouter);
-app.use('/surveys', surveysRouter);
-app.use('/login', loginRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/surveys', surveysRouter);
+app.use('/api/auth', authRouter);
+//app.use('/login', loginRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
