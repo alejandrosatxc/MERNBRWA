@@ -5,7 +5,7 @@ import Usernav from './Usernav'
 import Useraccount from './Useraccount'
 import Survey from './Survey'
 
-export default class Dashboard extends Component {
+const Dashboard = () => {
     render() {
         return(
           <Router>  
@@ -24,3 +24,5 @@ export default class Dashboard extends Component {
         );
     }
 }
+
+export default Dashboard
