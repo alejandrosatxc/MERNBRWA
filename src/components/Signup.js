@@ -23,7 +23,7 @@ const FormikSignup = () => {
         onSubmit: async (values) => {
           await new Promise((r) => setTimeout(r, 500));
           console.log(values);
-          axios.post('http://localhost:5000/users/add', values)
+          axios.post('http://localhost:5000/api/users', values)
             .then(res => console.log(res.data));
         },
         validationSchema: Yup.object({
