@@ -32,6 +32,31 @@ import {
       }); //i.e. if token is invalid
 };
 
+// Register User
+export const register = ({ firstName, lastName, email, password}) => dispatch => {
+    // Headers
+    const config = {
+        headers: {
+            'Content-Type' : 'application/json'
+        }
+    }
+
+    // Request body
+    const body = JSON.stringify({firstName, lastName, email, password});
+
+    axios.post('/api/users', body, config)
+      .then(res => dispatch({
+          type: REGISTER_SUCCESS,
+          payload: res.data
+      }))
+      .catch(err => {
+          dispatch(returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL'));
+          dispatch({
+              type: REGISTER_FAIL
+          });
+      });
+}
+
 // Setup config/headers and token
 export const tokenConfig = getState => {
         // Get token from sessionStorage
