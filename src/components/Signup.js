@@ -5,18 +5,6 @@ import {  useFormik, FormikProvider, Form } from 'formik'
 import * as Yup from 'yup'
 import TextInputLiveFeedback from './TextInputLiveFeedback'
 
-const generateSalt = (length) => {
-
-  var result           = [];
-  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  var charactersLength = characters.length;
-
-  for ( var i = 0; i < length; i++ ) {
-    result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
-  }
-  return result.join('');
-}
-
 const FormikSignup = () => {
 
     //Form validation is done using formik. The useFormik function defines
@@ -34,18 +22,8 @@ const FormikSignup = () => {
         },
         onSubmit: async (values) => {
           await new Promise((r) => setTimeout(r, 500));
-          let newUser = {
-            ...values
-          }
-          const hash = require("crypto")
-            .createHash("sha256")
-            .update(newUser.password.concat(salt))
-            .digest("hex");
-          newUser.hash = hash
-          newUser.salt = setSalt(generateSalt(20))
-          delete newUser.password
-          console.log(newUser);
-          axios.post('http://localhost:5000/users/add', newUser)
+          console.log(values);
+          axios.post('http://localhost:5000/users/add', values)
             .then(res => console.log(res.data));
         },
         validationSchema: Yup.object({
