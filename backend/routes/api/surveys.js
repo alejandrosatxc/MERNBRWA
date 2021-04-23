@@ -1,5 +1,6 @@
 const router = require('express').Router();
-let Survey = require('../models/surveys.model');
+let Survey = require('../../models/surveys.model');
+const auth = require('../../middleware/auth')
 
 router.route('/').get((req, res) => {
     Survey.find()
@@ -7,7 +8,7 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json("Error: " + err));
 });
 
-router.route('/add').post((req, res) => {
+router.route('/add').post(auth, (req, res) => {
     const surveyid = Number(req.body.surveyid);
     const name = req.body.name;
     const description = req.body.description;
