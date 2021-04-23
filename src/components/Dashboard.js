@@ -6,7 +6,6 @@ import Useraccount from './Useraccount'
 import Survey from './Survey'
 
 const Dashboard = () => {
-    render() {
         return(
           <Router>  
             <Row>
@@ -22,7 +21,6 @@ const Dashboard = () => {
             </Row>
           </Router>
         );
-    }
 }
 
 export default Dashboard
