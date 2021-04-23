@@ -7,7 +7,7 @@ import Reset from './Reset'
 import axios from 'axios'
 //This might need to be recoded to work as a hook later on
 const loginUser = (credentials) => {
-    const promise = axios.post('http://localhost:5000/login', credentials)
+    const promise = axios.post('http://localhost:5000/api/auth', credentials)
     const token = promise.then((res) => res.data)
     return token
 }
