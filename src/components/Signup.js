@@ -1,105 +1,116 @@
-import React from 'react'
-import axios from 'axios'
-import { Card } from 'react-bootstrap'
-import {  useFormik, FormikProvider, Form } from 'formik'
-import * as Yup from 'yup'
-import TextInputLiveFeedback from './TextInputLiveFeedback'
+import React, { useState, useEffect} from 'react'
+import {
+  Button,
+  Card,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  NavLink,
+  Alert
+} from 'reactstrap';
 
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { register } from '../actions/authActions'
+import { clearErrors} from '../actions/errorActions'
 
-const FormikSignup = () => {
+const Register = ({
+  isAuthenticated,
+  error,
+  register,
+  clearErrors
+}) => {
 
-    //Form validation is done using formik. The useFormik function defines
-    //the validation schema for each field, their initial values and 
-    //code that runs when the form is submitted
-    
-/*
-    static propTypes = {
-      isAuthenticated: PropTypes.bool,
-      error: PropTypes.object.isRequired,
-      register: PropTypes.func.isRequired  
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [msg, setMsg] = useState(null);
+
+  const handleChangeFirstName = e => setFirstName(e.target.value);
+  const handleChangeLastName = e => setLastName(e.target.value);
+  const handleChangeEmail = e => setEmail(e.target.value);
+  const handleChangePassword = e => setPassword(e.target.value);
+
+  const handleOnSubmit = e => {
+    e.preventDefault();
+    const user = {
+      firstName,
+      lastName,
+      email,
+      password
+    };
+    // Attempt to login
+    register(user);
+  }
+
+  useEffect(() => {
+    if (error.id === 'REGISTER_FAIL') {
+      setMsg(error.msg.msg);
+    } else {
+      setMsg(null);
     }
-*/
-    const formik = useFormik({
-        initialValues: {
-          firstName: '',
-          lastName: '',
-          email: '',
-          password: '',
-        },
-        onSubmit: async (values) => {
-          await new Promise((r) => setTimeout(r, 500));
-          console.log(values);
-          axios.post('http://localhost:5000/api/users', values)
-            .then(res => console.log(res.data));
-        },
-        validationSchema: Yup.object({
-          firstName: Yup.string()
-            .min(2, 'Must be at least 2 characters')
-            .max(30, 'Must be less  than 30 characters')
-            .required('First name is required')
-            .matches(
-              /^[a-zA-Z-]+$/,
-              'Cannot contain special characters or spaces'
-            ),
-          lastName: Yup.string()
-            .min(2, 'Must be at least 2 characters')
-            .max(30, 'Must be less  than 30 characters')
-            .required('Last name is required')
-            .matches(
-              /^[a-zA-Z-]+$/,
-              'Cannot contain special characters or spaces'
-            ),
-          email: Yup.string()
-            .email('Invalid email')
-            .required('Required'),
-          password: Yup.string()
-            .min(8, 'Must be at least 8 characters')
-            .required('Required'),
-        }),
-    });
-    
-      return (
-        <Card>
-            <h3>Create Account</h3>
-            <p>
-                The user portal allow you to fill out and generate
-                documents that you have purchased or been assigned,
-                online and at your leisure.
-            </p>
-            <FormikProvider value={formik}>
-                <Form>
-                  <TextInputLiveFeedback
-                    label="First Name"
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                  />
-                  <TextInputLiveFeedback
-                    label="Last Name"
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                  />
-                  <TextInputLiveFeedback
-                    label="Email"
-                    id="email"
-                    name="email"
-                    type="email"
-                    />
-                  <TextInputLiveFeedback
-                    label="Password"
-                    id="password"
-                    name="password"
-                    type="password"
-                    />
-                  <button className="btn btn-primary" type="submit">Sign Up</button>
-                </Form>
-            </FormikProvider>
-        </Card>
-      );
+
+    // If authenticated do stuff
+    if(isAuthenticated) {
+      
+    }
+  }, [error, isAuthenticated])
+
+  return (
+    <Card>
+        <h3>Create Account</h3>
+        <p>
+            The user portal allow you to fill out and generate
+            documents that you have purchased or been assigned,
+            online and at your leisure.
+        </p>
+        {msg ? <Alert color="danger">{msg}</Alert> : null}
+        <Form onSubmit={handleOnSubmit}>
+          <FormGroup>
+            <Label for="firstName">First Name</Label>
+            <Input
+              type="text"
+              name="firstName"
+              id="firstName"
+              placeholder="First Name"
+              onChange={handleChangeFirstName}
+            />
+            
+            <Label for="lastName">First Name</Label>
+            <Input
+              type="text"
+              name="lastName"
+              id="lastName"
+              placeholder="Last Name"
+              onChange={handleChangeLastName}
+            />
+
+            <Label for="email">Email</Label>
+            <Input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Email"
+              onChange={handleChangeEmail}
+            />
+
+            <Label for="password">Password</Label>
+            <Input
+              type="text"
+              name="password"
+              id="password"
+              placeholder="Password"
+              onChange={handleChangePassword}
+            />
+            <Button>
+              Register
+            </Button>
+          </FormGroup>
+        </Form>
+    </Card>
+  );
 }
 
 const mapStateToProps = state => ({
@@ -109,5 +120,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { register }
-)(FormikSignup)
+  { register, clearErrors }
+)(Register)

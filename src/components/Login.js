@@ -1,31 +1,62 @@
-import React, { useState } from 'react'
-import { Switch, Route, Link } from 'react-router-dom'
+import React, { useState, useEffect, useCallback } from 'react'
+import { Switch, Route, Link, Redirect } from 'react-router-dom'
 import { Form, Card, Button, Row, Col } from 'react-bootstrap'
+
+import { connect } from 'react-redux'
+import { login, logout } from '../actions/authActions'
+import { clearErrors } from '../actions/errorActions'
+
 import PropTypes from 'prop-types'
+
 import Signup from './Signup'
 import Reset from './Reset'
 import axios from 'axios'
-//This might need to be recoded to work as a hook later on
-const loginUser = (credentials) => {
-    const promise = axios.post('http://localhost:5000/api/auth', credentials)
-    const token = promise.then((res) => res.data)
-    return token
-}
-//Might need to handle situation where the component unmounts beofre a promise resolves
-const Login = ({setToken}) => {
 
+
+//Might need to handle situation where the component unmounts beofre a promise resolves
+const Login = ({
+    isAuthenticated,
+    error,
+    login,
+    clearErrors,
+}) => {
+
+    const [active, setActive] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const [msg, setMsg] = useState();
+
+    const handleChangeEmail = e => setEmail(e.target.value)
+    const handleChangePassword = e => setPassword(e.target.value)
+
+    const handleLogin = useCallback(() => {
+        clearErrors();
+        setActive(!active)
+    }, [clearErrors]);
 
     const handleSubmit = async e => {
         e.preventDefault();
-        const token = await loginUser({
-            email,
-            password
-        });
-        console.log(email, password, token )
-        setToken(token);
+        const user = {email, password};
+
+        // Attempt to login
+        login(user);
     }
+
+    useEffect(() => {
+        // Check for register error
+        if(error.id === 'LOGIN_FAIL') {
+            setMsg(error.msg.msg);
+        } else {
+            setMsg(null);
+        }
+
+        // If authenticated, idk do some stuff
+        if(active) {
+            if(isAuthenticated) {
+                //handleLogin();
+            }
+        }
+    }, [error, isAuthenticated, clearErrors]);
 
     return(
         <Switch>
@@ -58,7 +89,7 @@ const Login = ({setToken}) => {
                                     <Form.Control 
                                     type="email" 
                                     placeholder="Email Address"
-                                    onChange={e => setEmail(e.target.value)}
+                                    onChange={handleChangeEmail}
                                     />
                                 </Form.Group>
                                 <Form.Group controlId="password">
@@ -66,10 +97,11 @@ const Login = ({setToken}) => {
                                     <Form.Control 
                                     type="password" 
                                     placeholder="Password" 
-                                    onChange={e => setPassword(e.target.value)}
+                                    onChange={handleChangePassword}
                                     />
                                 </Form.Group>
-                                <button className="btn btn-primary" type="submit">Sign in</button>       
+                                <button className="btn btn-primary" type="submit">Sign in</button>
+                                <button className="btn btn-primary" onClick={logout}>Sign out</button>       
                                 <p>Forgot your password? Click <Link to="/reset">here to reset</Link>  your password</p>                     
                             </Form>
                         </Col>
@@ -85,7 +117,18 @@ const Login = ({setToken}) => {
 }
 
 Login.propTypes = {
-    setToken: PropTypes.func.isRequired
+    isAuthenticated: PropTypes.bool,
+    error: PropTypes.object.isRequired,
+    login: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired
 }
 
-export default Login
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.error
+})
+
+export default connect(
+    mapStateToProps,
+    { login, clearErrors }
+)(Login);

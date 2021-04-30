@@ -7,8 +7,6 @@ require('dotenv').config();
 //User Model
 const User = require('../../models/users.model');
 const bcrypt = require('bcryptjs');
-const { config } = require('dotenv');
-
 // @route   POST  api/auth
 // @desc    Auth new user
 // @access  Public
@@ -25,7 +23,7 @@ router.post('/', (req, res) => {
     //Check for existing user/email
     User.findOne({ email }) //This can also be written as User.findOne({ email })
       .then(user => {
-          if(!user) return res.status(400).json({msg : "User does not exists"});
+          if(!user) return res.status(400).json({msg : "User does not exist"});
 
           // Validate password
           bcrypt.compare(password, user.password)

@@ -10,16 +10,14 @@ import {
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
     REGISTER_FAIL
-} from '../actions/types';
+} from './types';
 
- //Check token & load user
- export const loadUser = () => (dispatch, getState) => {    //get token from state
+//Check token & load user
+export const loadUser = () => (dispatch, getState) => {    //get token from state
     // User loading
     dispatch({ type: USER_LOADING });
 
-
-
-    axios.get('/api/auth/user', tokenConfig(getState )) // returns a promise
+    axios.get('http://localhost:5000/api/auth/user', tokenConfig(getState )) // returns a promise
       .then(res => dispatch({
           type: USER_LOADED,
           payload: res.data
@@ -44,7 +42,7 @@ export const register = ({ firstName, lastName, email, password}) => dispatch =>
     // Request body
     const body = JSON.stringify({firstName, lastName, email, password});
 
-    axios.post('/api/users', body, config)
+    axios.post('http://localhost:5000/api/users', body, config)
       .then(res => dispatch({
           type: REGISTER_SUCCESS,
           payload: res.data
@@ -56,6 +54,42 @@ export const register = ({ firstName, lastName, email, password}) => dispatch =>
           });
       });
 }
+
+// Login User
+export const login = ({ email, password }) => dispatch => {
+    // Headers
+    const config = {
+        headers: {
+            'Content-Type' : 'application/json'
+        }
+    };
+
+    // Request body
+    const body = JSON.stringify({ email, password });
+    axios
+      .post('http://localhost:5000/api/auth', body, config)
+      .then(res => 
+        dispatch({
+            type: LOGIN_SUCCESS,
+            payload: res.data
+        })
+      )
+      .catch(err => {
+          dispatch(
+              returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL')
+          );
+          dispatch({
+              type: LOGIN_FAIL
+          });
+      });
+};
+
+// Logout User
+export const logout = () => {
+    return {
+        type: LOGOUT_SUCCESS
+    };
+};
 
 // Setup config/headers and token
 export const tokenConfig = getState => {
