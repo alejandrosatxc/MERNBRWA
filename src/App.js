@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router} from "react-router-dom";
 
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import store from './store'
 import { loadUser } from './actions/authActions'
 
@@ -18,9 +18,12 @@ import Dashboard from "./components/Dashboard";
 import Login from './components/Login'
 
 function App() {
-  const auth = useSelector(state => state.auth)
+
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
+  const dispatch = useDispatch()
+  
   useEffect(() => {
-    store.dispatch(loadUser());
+    dispatch(loadUser());
   });
 
   return (
@@ -28,16 +31,22 @@ function App() {
         <BRNavbar/>
         <Container className="main-container">
           {/* token defines loggedin or logged out, show portal if loggedout, show dash if logged in */}
-          {console.log(auth)}
-          {auth,isAuthorized
+          {isAuthenticated
             ? <Dashboard />
             : <Login />
           }
-          {console.log(auth)}
         </Container>       
         <Footer />
       </Router>
   );
 }
+/*
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
 
-export default App;
+export default connect(
+  mapStateToProps
+)(App);
+*/
+export default App
