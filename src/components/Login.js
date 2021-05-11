@@ -40,6 +40,7 @@ const Login = ({
 
         // Attempt to login
         login(user);
+        clearErrors();
     }
 
     useEffect(() => {
@@ -53,7 +54,7 @@ const Login = ({
         // If authenticated, idk do some stuff
         if(active) {
             if(isAuthenticated) {
-                //handleLogin();
+                handleLogin();
             }
         }
     }, [error, isAuthenticated, clearErrors]);
@@ -101,7 +102,6 @@ const Login = ({
                                     />
                                 </Form.Group>
                                 <button className="btn btn-primary" type="submit">Sign in</button>
-                                <button className="btn btn-primary" onClick={logout}>Sign out</button>       
                                 <p>Forgot your password? Click <Link to="/reset">here to reset</Link>  your password</p>                     
                             </Form>
                         </Col>
