@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from 'react'
+import { Link } from 'react-router-dom'
 import {
   Button,
   Card,
@@ -7,7 +8,7 @@ import {
   Label,
   Input,
   NavLink,
-  Alert
+  Alert,
 } from 'reactstrap';
 
 import { connect } from 'react-redux'
@@ -107,6 +108,7 @@ const Register = ({
             <Button>
               Register
             </Button>
+            <span>Already have an account? <Link to="/"> Sign in. </Link></span>
           </FormGroup>
         </Form>
     </Card>
