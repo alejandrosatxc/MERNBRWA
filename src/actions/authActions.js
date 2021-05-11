@@ -17,7 +17,7 @@ export const loadUser = () => (dispatch, getState) => {    //get token from stat
     // User loading
     dispatch({ type: USER_LOADING });
 
-    axios.get('http://localhost:5000/api/auth/user', tokenConfig(getState )) // returns a promise
+    axios.get('http://localhost:5000/api/auth/user', tokenConfig(getState)) // returns a promise
       .then(res => dispatch({
           type: USER_LOADED,
           payload: res.data
