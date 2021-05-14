@@ -29,7 +29,7 @@ const SurveyViewer = () => {
         const body = JSON.stringify({data, _id});
         console.log(body);
 
-        axios.post('http://localhost:5000/api/surveys/submit', body, config)
+        axios.post('/api/surveys/submit', body, config)
             .then(res => {
                 console.log(res)
             })
