@@ -1,6 +1,7 @@
 const router = require('express').Router();
 let Survey = require('../../models/surveys.model');
-const auth = require('../../middleware/auth')
+let userSurvey = require('../../models/usersurveys.model');
+const auth = require('../../middleware/auth');
 
 router.route('/').get((req, res) => {
     Survey.find()
@@ -20,5 +21,18 @@ router.route('/add').post(auth, (req, res) => {
         .then(() => res.json('Survey added!'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
+
+router.route('/submit').post((req, res) => {
+    const data = req.body.data;
+    const usurveyid = req.body._id;
+    const active = 1;
+    const surveyid = 1;
+
+    const newUserSurvey = new userSurvey({data, usurveyid, active, surveyid})
+
+    newUserSurvey.save()
+        .then(() => res.json('User survey added!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+}) 
 
 module.exports = router;
