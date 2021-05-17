@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import logo from '../img/brlogo_sm.png';
 import { logout } from '../actions/authActions'

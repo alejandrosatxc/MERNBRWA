@@ -2,7 +2,6 @@ import './App.css';
 import { BrowserRouter as Router} from "react-router-dom";
 
 import { useSelector, useDispatch } from 'react-redux'
-import store from './store'
 import { loadUser } from './actions/authActions'
 
 import 'bootstrap/dist/css/bootstrap.min.css'

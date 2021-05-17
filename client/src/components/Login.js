@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { Switch, Route, Link, Redirect } from 'react-router-dom'
+import { Switch, Route, Link } from 'react-router-dom'
 import { Form, Card, Button, Row, Col } from 'react-bootstrap'
 
 import { connect } from 'react-redux'
-import { login, logout } from '../actions/authActions'
+import { login } from '../actions/authActions'
 import { clearErrors } from '../actions/errorActions'
 
 import PropTypes from 'prop-types'
 
 import Signup from './Signup'
 import Reset from './Reset'
-import axios from 'axios'
 
 
 //Might need to handle situation where the component unmounts beofre a promise resolves
@@ -31,7 +30,6 @@ const Login = ({
 
     const handleLogin = useCallback(() => {
         clearErrors();
-        setActive(!active)
     }, [clearErrors]);
 
     const handleSubmit = async e => {
