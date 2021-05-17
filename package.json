@@ -1,62 +1,30 @@
 {
-  "name": "brreact",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.11.10",
-    "@testing-library/react": "^11.2.6",
-    "@testing-library/user-event": "^12.8.3",
-    "axios": "^0.21.1",
-    "bcryptjs": "^2.4.3",
-    "bootstrap": "^4.6.0",
-    "config": "^3.3.6",
-    "formik": "^2.2.6",
-    "generate-password": "^1.6.0",
-    "jsonwebtoken": "^8.5.1",
-    "react": "^17.0.2",
-    "react-bootstrap": "^1.5.2",
-    "react-dom": "^17.0.2",
-    "react-redux": "^7.2.3",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.3",
-    "reactstrap": "^8.9.0",
-    "redux": "^4.0.5",
-    "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.3.0",
-    "styled-components": "^5.2.3",
-    "survey-creator": "^1.8.46",
-    "survey-react": "^1.8.46",
-    "validator": "^13.5.2",
-    "web-vitals": "^1.1.1",
-    "yup": "^0.32.9"
-  },
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Bell Ripper Web App on a MERN Stack",
+  "main": "index.js",
   "scripts": {
-    "backend-install": "npm install --prefix backend",
-    "start": "node --optimize-for-size --max_old_space_size=460 node_modules/.bin/react-scripts start",
-    "build": "node --optimize-for-size --max_old_space_size=460 node_modules/.bin/react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "server": "nodemon server --prefix backend",
-    "client": "npm start",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix backend && npm run build"
-
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "keywords": [],
+  "author": "Alejandro Zapien",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^6.1.0",
+    "config": "^3.3.6",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.3"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
