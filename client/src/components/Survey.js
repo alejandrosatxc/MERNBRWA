@@ -23,7 +23,7 @@ const SurveyViewer = () => {
             }
         }
         const _id = user._id;
-        const data = JSON.stringify(survey.data)
+        const data = survey.data
         const body = JSON.stringify({data, _id});
         console.log(body);
 
