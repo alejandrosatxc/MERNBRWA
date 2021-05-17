@@ -1,6 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom';
-import { Card } from 'react-bootstrap'
 import * as Survey from "survey-react";
 import 'bootstrap/dist/css/bootstrap.css';
 import "survey-react/survey.css";
