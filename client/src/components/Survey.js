@@ -12,7 +12,7 @@ var surveyJSON = {"pages":[{"name":"intake","elements":[{"type":"text","name":"r
 
 const SurveyViewer = () => {
 
-    const user = useSelector(state => state.user)
+    const id = useSelector(state => state.auth.user._id)
 
     function sendDataToServer(survey, user) {
         //send Ajax request to your web server.
@@ -22,7 +22,7 @@ const SurveyViewer = () => {
                 'Content-Type' : 'application/json'
             }
         }
-        const _id = user._id;
+        const _id = id;
         const data = survey.data
         const body = JSON.stringify({data, _id});
         console.log(body);
