@@ -34,10 +34,10 @@ router.route('/submit').post((req, res) => {
     const active = 1;
     const surveyid = 1;
 
-
     const newUserSurvey = new userSurvey({data, usurveyid, active, surveyid})
     //Send mailgun email to ana containing the results of that data 
     surveyData = JSON.stringify(data);
+    
     const emailData = {
         from: 'BRWebApp <admin@bellripper.com>',
         to: 'alejandro@satxconsultants.com',
