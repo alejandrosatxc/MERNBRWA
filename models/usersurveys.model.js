@@ -12,8 +12,9 @@ const userSurveySchema = new Schema({
     //finaldate: { type: Date, required: true, default: null},
     data: { type: Object, required: true, default: null}, //The type might have to be JSON? 
     active: { type: String, required: true, default: null},
-
-});
+    }, {
+        timestamps: true
+    });
 
 const userSurvey = mongoose.model('userSurvey', userSurveySchema);
 
