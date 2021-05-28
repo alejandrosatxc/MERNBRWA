@@ -36,8 +36,7 @@ router.route('/submit').post((req, res) => {
 
     const newUserSurvey = new userSurvey({data, usurveyid, active, surveyid})
     //Send mailgun email to ana containing the results of that data 
-    surveyData = JSON.stringify(data);
-    
+    surveyData = JSON.stringify(data, null, 2);
     const emailData = {
         from: 'BRWebApp <admin@bellripper.com>',
         to: 'alejandro@satxconsultants.com',
@@ -53,7 +52,7 @@ router.route('/submit').post((req, res) => {
                 console.log(error);
             });
         })
-        .catch(err => res.status(400).json('Error: ' + err));
+        .catch(err => res.status(400).json('Data received: ' + JSON.stringify(newUserSurvey) + '\nError: ' + err));
 }) 
 
 module.exports = router;
