@@ -39,7 +39,7 @@ router.route('/submit').post((req, res) => {
     surveyData = JSON.stringify(data, null, 2);
     const emailData = {
         from: 'BRWebApp <admin@bellripper.com>',
-        to: 'alejandro@satxconsultants.com',
+        to: 'ana@bellripper.com',
         subject: 'New Client Intake',
         text: surveyData
     };
