@@ -37,11 +37,25 @@ router.route('/submit').post((req, res) => {
     const newUserSurvey = new userSurvey({data, usurveyid, active, surveyid})
     //Send mailgun email to ana containing the results of that data 
     surveyData = JSON.stringify(data, null, 2);
+
+    firstName = "<tr><td>First Name</td><td>" + data.legal_name.first_name + "</td></tr>"
+    lastName = "<tr><td>Last Name</td><td>" + data.legal_name.last_name + "</td></tr>"
+    email = "<tr><td>Email</td><td>" + data.email + "</td></tr>"
+    phone = "<tr><td>Phone</td><td>" + data.phone + "</td></tr>"
+    street = "<tr><td>Street</td><td>" + data.street + "</td></tr>"
+    city = "<tr><td>City</td><td>" + data.city + "</td></tr>"
+    state = "<tr><td>State</td><td>" + data.state + "</td></tr>"
+    zip = "<tr><td>Zip</td><td>" + data.zip + "</td></tr>"
+    surveyhtml = firstName + lastName + email + phone + street + city + state + zip
+    surveyhtml = "<table>" + surveyhtml + "</table>"
+    surveyhtml = "<h1>A new client has completed an intake form</h1>" + surveyhtml
+
+
     const emailData = {
         from: 'BRWebApp <admin@bellripper.com>',
-        to: 'ana@bellripper.com',
+        to: 'ana@satxconsultants.com',
         subject: 'New Client Intake',
-        text: surveyData
+        html: surveyhtml
     };
 
     newUserSurvey.save()
