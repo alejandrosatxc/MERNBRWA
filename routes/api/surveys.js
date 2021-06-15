@@ -53,7 +53,7 @@ router.route('/submit').post((req, res) => {
 
     const emailData = {
         from: 'BRWebApp <admin@bellripper.com>',
-        to: 'ana@bellripper.com',
+        to: 'alejandro@satxconsultants.com',
         subject: 'New Client Intake',
         html: surveyhtml
     };
