@@ -6,6 +6,8 @@ export default class Footer extends Component {
         return (
         <Container>    
             <p>
+                <a href="mailto:alejandro@satxconsultants.com?subject=Bug/App Feedback">Send Feedback/report bugs</a>
+                <br></br><br></br>
                 Disclaimers:
                 <br></br>
                 Bell Ripper PLLC is responsible for the content of this website.  The principal place of business for Bell Ripper PLLC is 1002 N. Flores St., San Antonio, Texas 78212.  Unless otherwise indicated, attorneys are not Board Certified.
