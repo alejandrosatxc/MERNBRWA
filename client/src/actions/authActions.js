@@ -9,7 +9,10 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAIL
+    REGISTER_FAIL,
+    SURVEY_LOADING,
+    SURVEY_LOADED,
+    SURVEY_FAIL
 } from './types';
 
 //Check token & load user
@@ -83,6 +86,31 @@ export const login = ({ email, password }) => dispatch => {
           });
       });
 };
+
+//Get survey
+//TODO find a way to pass a surveyid to the loadSurvey function in order to
+//allow different surveys to be loaded by surveyid. 
+export const loadSurvey = () => (dispatch) => {
+    //Survey loading
+    dispatch({ type: SURVEY_LOADING});
+
+    axios.get('/api/surveys', {
+        params : {
+            surveyid : 1 //TODO default survey to get is the intake
+        }
+    }) // returns a promise
+      .then(res => dispatch({
+          type: SURVEY_LOADED,
+          payload: res.data
+      }))
+      .catch(err => {
+          dispatch(returnErrors(err.response.data, err.response.status));
+          dispatch({
+              type: SURVEY_FAIL
+          });
+      }); //i.e. if token is invalid
+
+}
 
 // Logout User
 export const logout = () => {

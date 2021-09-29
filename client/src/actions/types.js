@@ -8,3 +8,6 @@ export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const SURVEY_LOADING = 'SURVEY_LOADING';
+export const SURVEY_LOADED = 'SURVEY_LOADED';
+export const SURVEY_FAIL = 'SURVEY_FAIL';

@@ -6,14 +6,19 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAIL
+    REGISTER_FAIL,
+    SURVEY_LOADED,
+    SURVEY_LOADING,
+    SURVEY_FAIL
 } from '../actions/types';
 
 const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: false,
     isLoading: false,
-    user: null
+    user: null,
+    surveyIsLoading: false, 
+    survey: null
 };
 
 export default function(state = initialState, action) {
@@ -30,6 +35,24 @@ export default function(state = initialState, action) {
                 isLoading: false,
                 user: action.payload
             };
+
+        case SURVEY_LOADING:
+            return {
+                ...state,
+                surveyIsLoading: true
+            }
+        case SURVEY_LOADED:
+            return {
+                ...state,
+                surveyIsLoading: false,
+                survey: action.payload
+            }
+        case SURVEY_FAIL:
+            return {
+                ...state,
+                surveyIsLoading: false,
+                survey: null
+            }
 
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
@@ -50,6 +73,7 @@ export default function(state = initialState, action) {
                 ...state,
                 token: null,
                 user: null,
+                survey: null,
                 isAuthenticated: false,
                 isLoading: false 
             }
