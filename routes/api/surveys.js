@@ -2,9 +2,10 @@
 const express = require('express');
 const router = express.Router();
 
-//Survey <Model
+//Survey Model
 let Survey = require('../../models/surveys.model');
 let userSurvey = require('../../models/usersurveys.model');
+let User = require('../../models/users.model');
 const auth = require('../../middleware/auth');
 
 
@@ -29,7 +30,7 @@ router.get('/', (req, res) => {
         .catch(err => res.status(400).json("Error: Survey does not exist" + err));
 });
 
-//router.route('/add').post(auth, (req, res) => {
+//Add a new survey to the database
 router.post('/add', auth, (req, res) => {
 
     const surveyid = Number(req.body.surveyid);
@@ -82,12 +83,22 @@ router.route('/submit').post((req, res) => {
     newUserSurvey.save()
         .then(() => {
             res.json('User survey added!');
+            if(surveyid === 1) { //If survey was intake, update intake_complete field
+                User.findByIdAndUpdate(usurveyid, {"intake_complete" : 1},
+                (res, err) => {
+                    if(err) {
+                        console.log(err)
+                    } else {
+                        console.log("Updated user intake_complete!")
+                    }
+                })
+            }
             mg.messages().send(emailData, function (error, body) {
                 console.log(body);
                 console.log(error);
             });
         })
-        .catch(err => res.status(400).json('Data received: ' + JSON.stringify(newUserSurvey) + '\nError: ' + err));
+        .catch(err => res.status(400).json('Data received: ' + JSON.stringify(newUserSurvey) + '\nError: ' + err));    
 }) 
 
 module.exports = router;
