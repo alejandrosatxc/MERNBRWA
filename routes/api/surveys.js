@@ -1,16 +1,37 @@
-const router = require('express').Router();
+//const router = require('express').Router();
+const express = require('express');
+const router = express.Router();
+
+//Survey <Model
 let Survey = require('../../models/surveys.model');
 let userSurvey = require('../../models/usersurveys.model');
 const auth = require('../../middleware/auth');
 
 
-router.route('/').get((req, res) => {
-    Survey.find()
-        .then(users => res.json(users))
-        .catch(err => res.status(400).json("Error: " + err));
+
+// @route   GET /api/surveys/
+// @desc    Get a Survey from DB
+// @access  Private
+
+//router.route('/').get((req, res) => {
+router.get('/', (req, res) => {
+    //pull out data via destructuring
+    const surveyid = req.query.surveyid;
+    
+    //simple backend validation
+    if(!surveyid) {
+        return res.status(400).json({msg: "surveyid not specified"});
+    }
+
+    //Find a survey by the provided id
+    Survey.findOne({ surveyid })
+        .then(survey => res.json(survey.survey)) //return only the survey in JSON format
+        .catch(err => res.status(400).json("Error: Survey does not exist" + err));
 });
 
-router.route('/add').post(auth, (req, res) => {
+//router.route('/add').post(auth, (req, res) => {
+router.post('/add', auth, (req, res) => {
+
     const surveyid = Number(req.body.surveyid);
     const name = req.body.name;
     const description = req.body.description;
