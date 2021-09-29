@@ -37,6 +37,7 @@ router.post('/', (req, res) => {
               bcrypt.hash(newUser.password, salt, (err, hash) => {
                   if(err) throw err;
                   newUser.password = hash;
+                  newUser.intake_complete = 0;
                   newUser.save() //this returns a promise
                     .then(user => {
 

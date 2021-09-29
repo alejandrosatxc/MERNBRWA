@@ -17,6 +17,7 @@ const usersSchema = new Schema({
     accesslevel: { type: Number, default: null },
     sessioncode: { type: String, default: null },
     lastaccess: { type: Date, default: null },
+    intake_complete: { type: Number, default: null},
     phone: { type: String, default: null },
     address: { type: String, default: null },
     city: { type: String, default: null },
