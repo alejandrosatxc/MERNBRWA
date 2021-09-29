@@ -15,7 +15,8 @@ import BRNavbar from "./components/BRNavbar";
 import Footer from "./components/Footer";
 import Dashboard from "./components/Dashboard";
 import Login from './components/Login'
-
+/* App componenet is a function, useSelector and useDispatch
+use are used to access state in the redux store */
 function App() {
 
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
