@@ -16,8 +16,9 @@ const SurveyViewer = () => {
     
 
     const id = useSelector(state => state.auth.user._id)
-    const surveyJSON = useSelector(state => state.auth.survey)
+    const survey = useSelector(state => state.auth.survey)
     const dispatch = useDispatch();
+    //const surveyJSON = survey.survey;
 
     useEffect(() => {
         dispatch(loadSurvey());
@@ -25,7 +26,7 @@ const SurveyViewer = () => {
             //useEffect to only run on the initial render
 
 
-    function sendDataToServer(survey, user) {
+    function sendDataToServer(currentSurvey, user) {
         //send Ajax request to your web server.
         console.log("The results are:" + JSON.stringify(survey.data));
         const config = {
@@ -33,11 +34,13 @@ const SurveyViewer = () => {
                 'Content-Type' : 'application/json'
             }
         }
-        const _id = id;
-        const data = survey.data
-        const body = JSON.stringify({data, _id});
-        console.log(body);
+        const _id = id; //userid
+        const data = currentSurvey.data;
+        const surveyid = survey.surveyid;
 
+        const body = JSON.stringify({data, _id, surveyid}); //send survey resposnses, userid, and the survey they completed
+        console.log(body);
+        
         axios.post('/api/surveys/submit', body, config)
             .then(res => {
                 console.log(res)
@@ -49,8 +52,8 @@ const SurveyViewer = () => {
 
     return (
         <>
-            {surveyJSON
-                ? <Survey.Survey json={surveyJSON} onComplete={sendDataToServer}/>
+            {survey
+                ? <Survey.Survey json={survey.survey} onComplete={sendDataToServer}/>
                 : <h1>no surveyJSON</h1>
             }
         </> //TODO change the header to be link to send feedback/usage stats
