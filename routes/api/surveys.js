@@ -16,7 +16,7 @@ const auth = require('../../middleware/auth');
 
 //router.route('/').get((req, res) => {
 router.get('/', (req, res) => {
-    //pull out data via destructuring
+    //Use params from get request
     const surveyid = req.query.surveyid;
     
     //simple backend validation
@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
 
     //Find a survey by the provided id
     Survey.findOne({ surveyid })
-        .then(survey => res.json(survey.survey)) //return only the survey in JSON format
+        .then(survey => res.json(survey)) //return the entire survey doc
         .catch(err => res.status(400).json("Error: Survey does not exist" + err));
 });
 
@@ -54,7 +54,7 @@ router.route('/submit').post((req, res) => {
     const data = req.body.data;
     const usurveyid = req.body._id;
     const active = 1;
-    const surveyid = 1;
+    const surveyid = req.body.surveyid;
 
     const newUserSurvey = new userSurvey({data, usurveyid, active, surveyid})
     //Send mailgun email to ana containing the results of that data 
@@ -85,13 +85,13 @@ router.route('/submit').post((req, res) => {
             res.json('User survey added!');
             if(surveyid === 1) { //If survey was intake, update intake_complete field
                 User.findByIdAndUpdate(usurveyid, {"intake_complete" : 1},
-                (res, err) => {
-                    if(err) {
-                        console.log(err)
-                    } else {
-                        console.log("Updated user intake_complete!")
-                    }
-                })
+                    (res, err) => {
+                        if(err) {
+                            console.log(err)
+                        } else {
+                            console.log("Updated user intake_complete!")
+                        }
+                    })
             }
             mg.messages().send(emailData, function (error, body) {
                 console.log(body);
