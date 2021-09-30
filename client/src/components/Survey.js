@@ -53,7 +53,7 @@ const SurveyViewer = () => {
     return (
         <>
             {survey
-                ? <Survey.Survey json={survey.survey} onComplete={sendDataToServer}/>
+                ? <Survey.Survey json={survey.survey} onComplete={sendDataToServer} showPreviewBeforeComplete='showAnsweredQuestions'/>
                 : <h1>no surveyJSON</h1>
             }
         </> //TODO change the header to be link to send feedback/usage stats
