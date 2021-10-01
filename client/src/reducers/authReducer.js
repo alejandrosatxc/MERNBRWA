@@ -9,15 +9,20 @@ import {
     REGISTER_FAIL,
     SURVEY_LOADED,
     SURVEY_LOADING,
-    SURVEY_FAIL
+    SURVEY_FAIL,
+    USERSURVEY_LOADING,
+    USERSURVEY_LOADED,
+    USERSURVEY_FAIL
 } from '../actions/types';
-
+//TODO create a reducer for survey actions/types
 const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: false,
     isLoading: false,
     user: null,
     surveyIsLoading: false, 
+    userSurveyIsLoading: false,
+    userSurvey: null,
     survey: null
 };
 
@@ -53,7 +58,23 @@ export default function(state = initialState, action) {
                 surveyIsLoading: false,
                 survey: null
             }
-
+        case USERSURVEY_LOADING:
+            return {
+                ...state,
+                userSurveyIsLoading: true
+            }
+        case USERSURVEY_LOADED:
+            return {
+                ...state,
+                userSurveyIsLoading: false,
+                userSurvey: action.payload
+            }
+        case USERSURVEY_FAIL:
+            return {
+                ...state,
+                userSurveyIsLoading: false,
+                userSurvey: null
+            }
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
             localStorage.setItem('token', action.payload.token);
@@ -74,6 +95,7 @@ export default function(state = initialState, action) {
                 token: null,
                 user: null,
                 survey: null,
+                userSurvey: null,
                 isAuthenticated: false,
                 isLoading: false 
             }
