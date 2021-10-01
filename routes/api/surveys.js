@@ -30,7 +30,31 @@ router.get('/', (req, res) => {
         .catch(err => res.status(400).json("Error: Survey does not exist" + err));
 });
 
-//Add a new survey to the database
+// @router  GET /api/surveys/usersurveys
+// @desc    Get a userSurvey from DB
+// @access  Private
+
+router.get('/usersurveys', (req, res) => {
+    //Use params from GET request
+    const usurveyid = req.query.usurveyid;
+    const surveyid = req.query.surveyid;
+    const request = JSON.stringify(req.query);
+
+    //simple backend validation
+    if(!surveyid || !usurveyid) {
+        return res.status(400).json({msg: "surveyid or usurveyid not specified" + surveyid });
+    }
+    
+    //Find a userSurvey by the provided ID's
+    userSurvey.findOne({usurveyid, surveyid})
+        .then(userSurvey => res.json(userSurvey)) //return the users survey responses
+        .catch(err => res.status(400).json("Error: userSurvey does not exist" + err));
+})
+
+// @router  GET /api/surveys/add
+// @desc    Add a new survey to the database
+// @access Private
+
 router.post('/add', auth, (req, res) => {
 
     const surveyid = Number(req.body.surveyid);
@@ -44,6 +68,10 @@ router.post('/add', auth, (req, res) => {
         .then(() => res.json('Survey added!'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
+
+// @router  GET /api/surveys/submit
+// @desc    Submit user survet data to the server
+// @access  Private
 
 router.route('/submit').post((req, res) => {
 
