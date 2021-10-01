@@ -43,7 +43,7 @@ router.post('/', (req, res) => {
 
                         //Create JWT
                         jwt.sign(
-                            { id: user.id }, //We will know who it is by the id that is being sent. must be verified
+                            { _id: user._id }, //We will know who it is by the id that is being sent. must be verified
                             process.env.jwtSecret,
                             { expiresIn : 3600 },
                             (err, token) => {
@@ -51,7 +51,7 @@ router.post('/', (req, res) => {
                                 res.json({
                                     token,
                                     user: {
-                                        id: user.id,
+                                        _id: user._id,
                                         firstName: user.firstName,
                                         lastName: user.lastName,
                                         email: user.email
