@@ -2,9 +2,12 @@ import React from 'react'
 import { Card, Container, Row, Col } from 'react-bootstrap'
 import { Formik, Form } from 'formik'
 import TextInputLiveFeedBack from './TextInputLiveFeedback'
+import { useSelector } from 'react-redux'
 
 const Useraccount = ({...props}) => {
 
+    const user = useSelector(state => state.auth.user);
+    //TODO The user object that gets loaded needs to be updated with data from the intake form once it is submitted
     return (
       <Card>
         <Container>
@@ -21,14 +24,14 @@ const Useraccount = ({...props}) => {
           </Row>
           <Formik
             initialValues={{
-                first_name: '',
-                last_name: '',
-                email: '',
-                address: '',
-                city: '',
-                state: '',
-                zip: '',
-                phone: '',
+                first_name: user.firstName,
+                last_name: user.lastName,
+                email: user.email,
+                address: user.address,
+                city: user.city,
+                state: user.state,
+                zip: user.zip,
+                phone: user.phone
             }}
             onSubmit={ async (values) => {
                 await new Promise((r) => setTimeout(r, 500));
