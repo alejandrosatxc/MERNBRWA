@@ -83,7 +83,7 @@ router.route('/submit').post((req, res) => {
     const usurveyid = req.body._id;
     const active = 1;
     const surveyid = req.body.surveyid;
-
+    //TODO add logic for UPDATING an existing usersurvey
     const newUserSurvey = new userSurvey({data, usurveyid, active, surveyid})
     //Send mailgun email to ana containing the results of that data 
     surveyData = JSON.stringify(data, null, 2);
@@ -111,8 +111,20 @@ router.route('/submit').post((req, res) => {
     newUserSurvey.save()
         .then(() => {
             res.json('User survey added!');
-            if(surveyid === 1) { //If survey was intake, update intake_complete field
-                User.findByIdAndUpdate(usurveyid, {"intake_complete" : 1},
+            if(surveyid === 1) { //If survey was intake, update intake_complete field, TODO update user data
+                User.findByIdAndUpdate(usurveyid, {
+                        "intake_complete" : 1,
+                        "address" : data.street,
+                        "city" : data.city,
+                        "state" : data.state,
+                        "zip" : data.zip,
+                        "phone" : data.phone,
+                        "citizen" : data.citizen,
+                        "dob" : data.dob,
+                        "emergency_name" : data.emergency_contact.first_name + " " + data.emergency_contact.last_name,
+                        "emergency_phone" : data.emergency_contact.e_phone,
+                        "emergency_relationship" : data.emergency_contact.relationship
+                    },
                     (res, err) => {
                         if(err) {
                             console.log(err)
