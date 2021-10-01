@@ -24,7 +24,7 @@ const usersSchema = new Schema({
     state: { type: String, default: null },
     zip: { type: String, default: null },
     dob: { type: String, default: null },
-    citizen: { type: Number, default: null },
+    citizen: { type: Boolean, default: null },
     citizen_extra: { type: String, default: null },
     military: { type: String, default: null },
     military_other: { type: String, default: null },
