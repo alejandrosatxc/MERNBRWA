@@ -70,7 +70,7 @@ router.post('/add', auth, (req, res) => {
 });
 
 // @router  GET /api/surveys/submit
-// @desc    Submit user survet data to the server
+// @desc    Submit user survey data to the server
 // @access  Private
 
 router.route('/submit').post((req, res) => {
@@ -111,7 +111,7 @@ router.route('/submit').post((req, res) => {
     newUserSurvey.save()
         .then(() => {
             res.json('User survey added!');
-            if(surveyid === 1) { //If survey was intake, update intake_complete field, TODO update user data
+            if(surveyid === 1) { //If survey was intake, update intake_complete field and user doc
                 User.findByIdAndUpdate(usurveyid, {
                         "intake_complete" : 1,
                         "address" : data.street,
