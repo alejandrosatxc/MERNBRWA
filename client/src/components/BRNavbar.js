@@ -7,10 +7,10 @@ import { useDispatch } from 'react-redux'
 
 import '../css/stack-interface.css';
 const BRNavbar = () => {
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
 
     const handleLogout = () => {
-        dispatch(logout())
+        logout();
     }
     return(
         <Navbar id="menu1" className="lawnavbg" bg="light" expand="lg">
