@@ -6,24 +6,14 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAIL,
-    SURVEY_LOADED,
-    SURVEY_LOADING,
-    SURVEY_FAIL,
-    USERSURVEY_LOADING,
-    USERSURVEY_LOADED,
-    USERSURVEY_FAIL
+    REGISTER_FAIL
 } from '../actions/types';
 //TODO create a reducer for survey actions/types
 const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: false,
     isLoading: false,
-    user: null,
-    surveyIsLoading: false, 
-    userSurveyIsLoading: false,
-    userSurvey: null,
-    survey: null
+    user: null
 };
 
 export default function(state = initialState, action) {
@@ -41,40 +31,6 @@ export default function(state = initialState, action) {
                 user: action.payload
             };
 
-        case SURVEY_LOADING:
-            return {
-                ...state,
-                surveyIsLoading: true
-            }
-        case SURVEY_LOADED:
-            return {
-                ...state,
-                surveyIsLoading: false,
-                survey: action.payload
-            }
-        case SURVEY_FAIL:
-            return {
-                ...state,
-                surveyIsLoading: false,
-                survey: null
-            }
-        case USERSURVEY_LOADING:
-            return {
-                ...state,
-                userSurveyIsLoading: true
-            }
-        case USERSURVEY_LOADED:
-            return {
-                ...state,
-                userSurveyIsLoading: false,
-                userSurvey: action.payload
-            }
-        case USERSURVEY_FAIL:
-            return {
-                ...state,
-                userSurveyIsLoading: false,
-                userSurvey: null
-            }
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
             localStorage.setItem('token', action.payload.token);
@@ -94,8 +50,8 @@ export default function(state = initialState, action) {
                 ...state,
                 token: null,
                 user: null,
-                survey: null,
-                userSurvey: null,
+                //survey: null,
+                //userSurvey: null, //this may need to be redone in the surveyReducer
                 isAuthenticated: false,
                 isLoading: false 
             }
