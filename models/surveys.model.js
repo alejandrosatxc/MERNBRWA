@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const surveysSchema = new Schema({
     surveyid: { type: Number, unique: true, min: 1 },
     name: { type: String, unique: true },
-    survey: { type: String, default: null },
+    surveyJSON: { type: String, default: null },
     cost: { type: Number, default: null },
     sellonline: { type: Boolean, default: 0 },
     description: { type: String, default: null },
