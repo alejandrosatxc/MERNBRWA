@@ -2,8 +2,6 @@ import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import logo from '../img/brlogo_sm.png';
 import { logout } from '../actions/authActions'
-import { useDispatch } from 'react-redux'
-
 
 import '../css/stack-interface.css';
 const BRNavbar = () => {
