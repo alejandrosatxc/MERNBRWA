@@ -6,8 +6,7 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
  
-import { loadSurvey } from '../actions/surveyActions'
-import { loadUserResponses } from '../actions/userSubmissionActions'
+import { loadSurvey, loadUserResponses } from '../actions/formActions'
 
 //TODO figure out how to do custom themeing 
 Survey.StylesManager.applyTheme("bootstrap");
@@ -18,8 +17,8 @@ const SurveyViewer = () => {
     
 
     const id = useSelector(state => state.auth.user._id)
-    const survey = useSelector(state => state.survey)
-    const userSubmission = useSelector(state => state.userSubmission)
+    const survey = useSelector(state => state.form.survey)
+    const userSubmission = useSelector(state => state.form.userSubmission)
     const dispatch = useDispatch();
     const surveyid = 1; //TODO Fix this, causing a lot of problems when reading as null or undefined
     //const userSurvey = {surveyid, id}
@@ -63,7 +62,7 @@ const SurveyViewer = () => {
             {survey
                 ? <Survey.Survey 
                     data={userSubmission ? userSubmission.userResponses : null/* Check if usurvey exists*/}
-                    json={survey}
+                    json={survey.surveyJSON}
                     onComplete={sendDataToServer} 
                     showPreviewBeforeComplete='showAnsweredQuestions'
                     completedHtml='Thank you for completing this form, a lawyer will review this information'/>
