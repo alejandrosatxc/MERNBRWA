@@ -70,7 +70,7 @@ router.post('/add', auth, (req, res) => {
 });
 
 // @router  GET /api/surveys/submit
-// @desc    Submit user survey data to the server
+// @desc    Submit userResponses to the server
 // @access  Private
 
 router.route('/submit').post((req, res) => {
@@ -79,23 +79,23 @@ router.route('/submit').post((req, res) => {
     const DOMAIN = 'portal.bellripper.com'; 
     const mg = mailgun({apiKey: "91dc585d7ea62bbce58e9a3e002a8f81-6ae2ecad-f03fc7ac", domain: DOMAIN});
 
-    const data = req.body.data;
+    const userResponses = req.body.data;
     const usurveyid = req.body._id;
     const active = 1;
     const surveyid = req.body.surveyid;
     //TODO add logic for UPDATING an existing userSubmission
-    const newUserSubmission = new userSubmission({data, usurveyid, active, surveyid})
-    //Send mailgun email to ana containing the results of that data 
-    surveyData = JSON.stringify(data, null, 2);
+    const newUserSubmission = new userSubmission({userResponses, usurveyid, active, surveyid})
+    //Send mailgun email to ana containing the results of userResponses 
+    surveyData = JSON.stringify(userResponses, null, 2);
 
-    firstName = "<tr><td>First Name</td><td>" + data.legal_name.first_name + "</td></tr>"
-    lastName = "<tr><td>Last Name</td><td>" + data.legal_name.last_name + "</td></tr>"
-    email = "<tr><td>Email</td><td>" + data.email + "</td></tr>"
-    phone = "<tr><td>Phone</td><td>" + data.phone + "</td></tr>"
-    street = "<tr><td>Street</td><td>" + data.street + "</td></tr>"
-    city = "<tr><td>City</td><td>" + data.city + "</td></tr>"
-    state = "<tr><td>State</td><td>" + data.state + "</td></tr>"
-    zip = "<tr><td>Zip</td><td>" + data.zip + "</td></tr>"
+    firstName = "<tr><td>First Name</td><td>" + userResponses.legal_name.first_name + "</td></tr>"
+    lastName = "<tr><td>Last Name</td><td>" + userResponses.legal_name.last_name + "</td></tr>"
+    email = "<tr><td>Email</td><td>" + userResponses.email + "</td></tr>"
+    phone = "<tr><td>Phone</td><td>" + userResponses.phone + "</td></tr>"
+    street = "<tr><td>Street</td><td>" + userResponses.street + "</td></tr>"
+    city = "<tr><td>City</td><td>" + userResponses.city + "</td></tr>"
+    state = "<tr><td>State</td><td>" + userResponses.state + "</td></tr>"
+    zip = "<tr><td>Zip</td><td>" + userResponses.zip + "</td></tr>"
     surveyhtml = firstName + lastName + email + phone + street + city + state + zip
     surveyhtml = "<table>" + surveyhtml + "</table>"
     surveyhtml = "<h1>A new client has completed an intake form</h1>" + surveyhtml
@@ -114,16 +114,16 @@ router.route('/submit').post((req, res) => {
             if(surveyid === 1) { //If survey was intake, update intake_complete field and user doc
                 User.findByIdAndUpdate(usurveyid, {
                         "intake_complete" : 1,
-                        "address" : data.street,
-                        "city" : data.city,
-                        "state" : data.state,
-                        "zip" : data.zip,
-                        "phone" : data.phone,
-                        "citizen" : data.citizen,
-                        "dob" : data.dob,
-                        "emergency_name" : data.emergency_contact.first_name + " " + data.emergency_contact.last_name,
-                        "emergency_phone" : data.emergency_contact.e_phone,
-                        "emergency_relationship" : data.emergency_contact.relationship
+                        "address" : userResponses.street,
+                        "city" : userResponses.city,
+                        "state" : userResponses.state,
+                        "zip" : userResponses.zip,
+                        "phone" : userResponses.phone,
+                        "citizen" : userResponses.citizen,
+                        "dob" : userResponses.dob,
+                        "emergency_name" : userResponses.emergency_contact.first_name + " " + userResponses.emergency_contact.last_name,
+                        "emergency_phone" : userResponses.emergency_contact.e_phone,
+                        "emergency_relationship" : userResponses.emergency_contact.relationship
                     },
                     (res, err) => {
                         if(err) {
@@ -138,7 +138,7 @@ router.route('/submit').post((req, res) => {
                 console.log(error);
             });
         })
-        .catch(err => res.status(400).json('Data received: ' + JSON.stringify(newUserSubmission) + '\nError: ' + err));    
+        .catch(err => res.status(400).json('userResponses received: ' + JSON.stringify(newUserSubmission) + '\nError: ' + err));    
 }) 
 
 module.exports = router;
