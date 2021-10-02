@@ -6,7 +6,8 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
  
-import { loadSurvey, loadUserResponses } from '../actions/surveyActions'
+import { loadSurvey } from '../actions/surveyActions'
+import { loadUserResponses } from '../actions/userSubmissionActions'
 
 //TODO figure out how to do custom themeing 
 Survey.StylesManager.applyTheme("bootstrap");
@@ -17,8 +18,8 @@ const SurveyViewer = () => {
     
 
     const id = useSelector(state => state.auth.user._id)
-    const survey = useSelector(state => state.survey.surveyJSON)
-    const userSurveyData = useSelector(state => state.survey.userSurvey)
+    const survey = useSelector(state => state.survey)
+    const userSubmission = useSelector(state => state.userSubmission)
     const dispatch = useDispatch();
     const surveyid = 1; //TODO Fix this, causing a lot of problems when reading as null or undefined
     //const userSurvey = {surveyid, id}
@@ -32,7 +33,7 @@ const SurveyViewer = () => {
     //TODO this needs to be a redux action and moved out of this component as such.
     function sendDataToServer(currentSurvey, user) {
         //send Ajax request to your web server.
-        console.log("The results are:" + JSON.stringify(survey.data));
+        console.log("The results are:" + JSON.stringify(currentSurvey.data));
         const config = {
             headers: {
                 'Content-Type' : 'application/json'
@@ -61,7 +62,7 @@ const SurveyViewer = () => {
         <>
             {survey
                 ? <Survey.Survey 
-                    data={userSurveyData ? userSurveyData.data : null/* Check if usurvey exists*/}
+                    data={userSubmission ? userSubmission.userResponses : null/* Check if usurvey exists*/}
                     json={survey}
                     onComplete={sendDataToServer} 
                     showPreviewBeforeComplete='showAnsweredQuestions'
