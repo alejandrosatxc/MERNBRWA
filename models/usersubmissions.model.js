@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const userSurveySchema = new Schema({
+const userSubmissionSchema = new Schema({
     usurveyid: { type: String, default: null },
     //userid: { type: String, required: true, default: null },
     surveyid: { type: String, required: true, default: null},
@@ -16,6 +16,6 @@ const userSurveySchema = new Schema({
         timestamps: true
     });
 
-const userSurvey = mongoose.model('userSurvey', userSurveySchema);
+const userSubmission = mongoose.model('userSubmission', userSubmissionSchema);
 
-module.exports = userSurvey;
+module.exports = userSubmission;

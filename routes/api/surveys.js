@@ -4,7 +4,7 @@ const router = express.Router();
 
 //Survey Model
 let Survey = require('../../models/surveys.model');
-let userSurvey = require('../../models/usersurveys.model');
+let userSubmission = require('../../models/usersubmissions.model');
 let User = require('../../models/users.model');
 const auth = require('../../middleware/auth');
 
@@ -30,11 +30,11 @@ router.get('/', (req, res) => {
         .catch(err => res.status(400).json("Error: Survey does not exist" + err));
 });
 
-// @router  GET /api/surveys/usersurveys
-// @desc    Get a userSurvey from DB
+// @router  GET /api/surveys/usersubmissions
+// @desc    Get a userSubmission from DB
 // @access  Private
 
-router.get('/usersurveys', (req, res) => {
+router.get('/usersubmissions', (req, res) => {
     //Use params from GET request
     const usurveyid = req.query.usurveyid;
     const surveyid = req.query.surveyid;
@@ -45,10 +45,10 @@ router.get('/usersurveys', (req, res) => {
         return res.status(400).json({msg: "surveyid or usurveyid not specified" + surveyid });
     }
     
-    //Find a userSurvey by the provided ID's
-    userSurvey.findOne({usurveyid, surveyid})
-        .then(userSurvey => res.json(userSurvey)) //return the users survey responses
-        .catch(err => res.status(400).json("Error: userSurvey does not exist" + err));
+    //Find a userSubmission by the provided ID's
+    userSubmission.findOne({usurveyid, surveyid})
+        .then(userSubmission => res.json(userSubmission)) //return the users survey responses
+        .catch(err => res.status(400).json("Error: userSubmission does not exist" + err));
 })
 
 // @router  GET /api/surveys/add
@@ -83,8 +83,8 @@ router.route('/submit').post((req, res) => {
     const usurveyid = req.body._id;
     const active = 1;
     const surveyid = req.body.surveyid;
-    //TODO add logic for UPDATING an existing usersurvey
-    const newUserSurvey = new userSurvey({data, usurveyid, active, surveyid})
+    //TODO add logic for UPDATING an existing userSubmission
+    const newUserSubmission = new userSubmission({data, usurveyid, active, surveyid})
     //Send mailgun email to ana containing the results of that data 
     surveyData = JSON.stringify(data, null, 2);
 
@@ -108,7 +108,7 @@ router.route('/submit').post((req, res) => {
         html: surveyhtml
     };
 
-    newUserSurvey.save()
+    newUserSubmission.save()
         .then(() => {
             res.json('User survey added!');
             if(surveyid === 1) { //If survey was intake, update intake_complete field and user doc
@@ -138,7 +138,7 @@ router.route('/submit').post((req, res) => {
                 console.log(error);
             });
         })
-        .catch(err => res.status(400).json('Data received: ' + JSON.stringify(newUserSurvey) + '\nError: ' + err));    
+        .catch(err => res.status(400).json('Data received: ' + JSON.stringify(newUserSubmission) + '\nError: ' + err));    
 }) 
 
 module.exports = router;

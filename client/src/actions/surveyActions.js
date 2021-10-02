@@ -5,9 +5,9 @@ import {
     SURVEY_LOADING,
     SURVEY_LOADED,
     SURVEY_FAIL,
-    USERSURVEY_LOADING,
-    USERSURVEY_LOADED,
-    USERSURVEY_FAIL
+    USERSUBMISSION_LOADING,
+    USERSUBMISSION_LOADED,
+    USERSUBMISSION_FAIL
 } from './types'
 
 
@@ -39,17 +39,17 @@ export const loadSurvey = (surveyid) => (dispatch) => {
 export const loadUserResponses = (surveyid, id) => (dispatch) => {
 
     //Loading User reposponses into survey
-    dispatch({type: USERSURVEY_LOADING});
-
-    axios.get('/api/surveys/usersurveys?surveyid='+surveyid+"&usurveyid="+id) //returns a promise
+    dispatch({type: USERSUBMISSION_LOADING});
+    //TODO fix this so the URI here doesn't look so ugly. Use params? 
+    axios.get('/api/surveys/usersubmissions?surveyid='+surveyid+"&usurveyid="+id) //returns a promise
       .then(res => dispatch({
-          type: USERSURVEY_LOADED,
+          type: USERSUBMISSION_LOADED,
           payload: res.data
       }))
       .catch(err => {
           dispatch(returnErrors(err.resposonse.data, err.response.status)); //TODO fix this shit
           dispatch({
-              type: USERSURVEY_FAIL
+              type: USERSUBMISSION_FAIL
           })
       })
 }
