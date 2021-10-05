@@ -9,8 +9,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { loadSurvey, loadUserResponses } from '../actions/formActions'
 
 //TODO figure out how to do custom themeing 
-Survey.StylesManager.applyTheme("bootstrap");
-Survey.defaultBootstrapCss.navigationButton = "btn btn-green";
+//Survey.StylesManager.applyTheme("bootstrapmaterial");
+//Survey.defaultBootstrapCss.navigationButton = "btn btn-green";
 
 //get a survey from mongoDB
 const SurveyViewer = () => {

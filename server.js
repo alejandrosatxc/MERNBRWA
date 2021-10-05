@@ -17,7 +17,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true});
 const connection = mongoose.connection;
 connection.once('open', () => {
     console.log("MondoDb database connection established successfully");
-})
+});
 
 const usersRouter = require('./routes/api/users');
 const surveysRouter = require('./routes/api/surveys');
@@ -35,9 +35,11 @@ if(process.env.NODE_ENV === 'production') {
     app.get('*', (req, res) =>  {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     })
-}
 
+    console.log('This shit is prod homie');
+}
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
+    console.log('process.env.NODE_ENV=' + process.env.NODE_ENV);
 });
