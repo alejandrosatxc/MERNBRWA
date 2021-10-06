@@ -5,6 +5,7 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
+    REGISTER_SUBMIT,
     REGISTER_SUCCESS,
     REGISTER_FAIL
 } from '../actions/types';
@@ -13,6 +14,7 @@ const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: false,
     isLoading: false,
+    isRegistering: false,
     user: null
 };
 
@@ -39,6 +41,13 @@ export default function(state = initialState, action) {
                 ...action.payload,
                 isAuthenticated: true,
                 isLoading: false,
+                isRegistering: false
+            }
+
+        case REGISTER_SUBMIT:
+            return {
+                ...state,
+                isRegistering: true
             }
         
         case AUTH_ERROR:
@@ -50,8 +59,7 @@ export default function(state = initialState, action) {
                 ...state,
                 token: null,
                 user: null,
-                //survey: null,
-                //userSurvey: null, //this may need to be redone in the surveyReducer
+                isRegistering: false,
                 isAuthenticated: false,
                 isLoading: false 
             }

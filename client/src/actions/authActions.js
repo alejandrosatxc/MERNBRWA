@@ -8,6 +8,7 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
+    REGISTER_SUBMIT,
     REGISTER_SUCCESS,
     REGISTER_FAIL,
     CLEAR_FORM
@@ -39,6 +40,8 @@ export const register = ({ firstName, lastName, email, password}) => dispatch =>
             'Content-Type' : 'application/json'
         }
     }
+
+    dispatch({ type: REGISTER_SUBMIT })
 
     // Request body
     const body = JSON.stringify({firstName, lastName, email, password});
