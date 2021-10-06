@@ -1,13 +1,13 @@
 import React from 'react'
 import { Card, Container, Row, Col } from 'react-bootstrap'
 import { Formik, Form } from 'formik'
-import TextInputLiveFeedBack from './TextInputLiveFeedback'
+//import TextInputLiveFeedBack from './TextInputLiveFeedback'
 import { useSelector } from 'react-redux'
+import MyTextInput from './MyTextInput'
 
 const Useraccount = ({...props}) => {
 
     const user = useSelector(state => state.auth.user);
-    //TODO The user object that gets loaded needs to be updated with data from the intake form once it is submitted
     return (
       <Card>
         <Container>
@@ -46,19 +46,15 @@ const Useraccount = ({...props}) => {
             <Form>
               <Row>
                 <Col>
-                  <TextInputLiveFeedBack
+                  <MyTextInput
                     label="First Name"
-                    placeholder="First Name"
-                    id="first_name"
                     name="first_name"
                     type="text"
                   />
                 </Col>
                 <Col>
-                  <TextInputLiveFeedBack
+                  <MyTextInput
                     label="Last Name"
-                    placeholder="Last Name"
-                    id="last_name"
                     name="last_name"
                     type="text"
                   />
@@ -66,10 +62,8 @@ const Useraccount = ({...props}) => {
               </Row>
               <Row>
                 <Col>
-                  <TextInputLiveFeedBack
+                  <MyTextInput
                     label="Email"
-                    placeholder="Email"
-                    id="email"
                     name="email"
                     type="email"
                   />
@@ -77,10 +71,8 @@ const Useraccount = ({...props}) => {
               </Row>
               <Row>
                 <Col>
-                  <TextInputLiveFeedBack
+                  <MyTextInput
                     label="Address"
-                    placeholder="Street Address"
-                    id="address"
                     name="address"
                     type="text"
                   />
@@ -88,28 +80,22 @@ const Useraccount = ({...props}) => {
               </Row>
               <Row>
                 <Col>
-                  <TextInputLiveFeedBack
+                  <MyTextInput
                     label="City"
-                    placeholder="City"
-                    id="city"
                     name="city"
                     type="text"
                   />
                 </Col>
                 <Col>
-                  <TextInputLiveFeedBack
+                  <MyTextInput
                     label="State"
-                    placeholder="State"
-                    id="state"
                     name="state"
                     type="text"
                   />
                 </Col>
                 <Col>
-                  <TextInputLiveFeedBack
+                  <MyTextInput
                     label="Zip"
-                    placeholder="Zip"
-                    id="zip"
                     name="zip"
                     type="text"
                   />
@@ -117,10 +103,8 @@ const Useraccount = ({...props}) => {
               </Row>
               <Row>
                 <Col>
-                  <TextInputLiveFeedBack
+                  <MyTextInput
                     label="Phone"
-                    placeholder="Phone"
-                    id="phone"
                     name="phone"
                     type="text"
                   />

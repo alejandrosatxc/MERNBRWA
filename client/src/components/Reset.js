@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Card } from 'react-bootstrap'
+import { Card, Button } from 'react-bootstrap'
 import { Formik, Form } from 'formik'
-import TextInputLiveFeedBack from './TextInputLiveFeedback'
+//import TextInputLiveFeedBack from './TextInputLiveFeedback'
+import MyTextInput from './MyTextInput'
 
 const Reset = () => {
     return (
@@ -14,14 +15,12 @@ const Reset = () => {
             </p>
             <Formik>
                 <Form>                    
-                    <TextInputLiveFeedBack 
+                    <MyTextInput
                       label="Email Address"
-                      placeholder="Email Address"
-                      id="email"
                       name="email"
                       type="email"
                     />
-                    <button className="btn btn-primary" type="submit">Reset Password</button>
+                    <Button type="submit">Reset Password</Button>
                 </Form>
             </Formik>
             <span>
