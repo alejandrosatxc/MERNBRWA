@@ -9,6 +9,7 @@ import { clearErrors } from '../actions/errorActions'
 import PropTypes from 'prop-types'
 
 import Signup from './Signup'
+import Register from './Register'
 import Reset from './Reset'
 
 
@@ -106,7 +107,7 @@ const Login = ({
                     </Row>
                 </Card>
             </Route>
-            <Route path="/signup" component={Signup} />
+            <Route path="/signup" component={Register} />
             <Route path="/reset" component={Reset} />
         </Switch>
 
