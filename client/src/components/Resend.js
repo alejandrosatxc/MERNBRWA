@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Card } from 'react-bootstrap'
+import { Card, Button } from 'react-bootstrap'
 import { Formik, Form } from 'formik'
-import TextInputLiveFeedback from './TextInputLiveFeedback'
+import MyTextInput from './MyTextInput'
 
 const Resend = () => {
     return (
@@ -12,16 +12,18 @@ const Resend = () => {
                 To have an activation link sent to you, enter the email address
                 you registered with below.
             </p>
-            <Formik>
+            <Formik
+                initialValues={{
+                    email: ''
+                }}>
                 <Form>
-                    <TextInputLiveFeedback
+                    <MyTextInput
                       label="Email"
-                      placeholder="Email"
                       name="email"
-                      id="email"
                       type="email"
                     />
-                    <button className="btn btn-primary" type="submit">Send Activation Email</button>
+                    <hr/>
+                    <Button type="submit">Send Activation Email</Button>
                 </Form>
             </Formik>
             <span class="type--fine-print block">Don't have an account yet?

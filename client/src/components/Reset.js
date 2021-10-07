@@ -6,6 +6,7 @@ import { Formik, Form } from 'formik'
 import MyTextInput from './MyTextInput'
 
 const Reset = () => {
+    //TODO add an on submit handler for password resetting
     return (
         <Card>
             <h2>Reset your password</h2>
@@ -13,13 +14,17 @@ const Reset = () => {
                 Please enter your email address and a password reset
                 link will be sent to you.
             </p>
-            <Formik>
+            <Formik
+                initialValues={{
+                    email: ''
+                }}>
                 <Form>                    
                     <MyTextInput
                       label="Email Address"
                       name="email"
                       type="email"
                     />
+                    <hr/>
                     <Button type="submit">Reset Password</Button>
                 </Form>
             </Formik>
