@@ -28,7 +28,8 @@ const Register = () => {
         firstName: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
         lastName: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
         email: Yup.string().email('Invalid email address').required('Required'),
-        password: Yup.string().required()
+        password: Yup.string().required('Required').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character (i.e. !@#$%&^*)")
     })
     
     return(
