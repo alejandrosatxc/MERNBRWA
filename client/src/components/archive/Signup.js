@@ -103,10 +103,11 @@ const Register = ({
               placeholder="Password"
               onChange={handleChangePassword}
             />
-            <Button>
+            <hr/>
+            <Button variant="primary">
               Register
             </Button>
-            <span>Already have an account? <Link to="/"> Sign in. </Link></span>
+            <span> Already have an account? <Link to="/"> Sign in. </Link></span>
           </FormGroup>
         </Form>
     </Card>

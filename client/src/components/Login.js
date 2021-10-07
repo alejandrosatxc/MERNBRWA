@@ -1,62 +1,40 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Switch, Route, Link } from 'react-router-dom'
-import { Form, Card, Button, Row, Col } from 'react-bootstrap'
+import { Card, Button, Row, Col, Alert} from 'react-bootstrap'
+import * as Yup from 'yup'
+import { Formik, Form} from 'formik'
 
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { login } from '../actions/authActions'
 import { clearErrors } from '../actions/errorActions'
 
-import PropTypes from 'prop-types'
-
-import Signup from './Signup'
+import MyTextInput from './MyTextInput'
 import Register from './Register'
 import Reset from './Reset'
 
-
-//Might need to handle situation where the component unmounts beofre a promise resolves
-const Login = ({
-    isAuthenticated,
-    error,
-    login,
-    clearErrors,
-}) => {
-
-    const [active, setActive] = useState();
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [msg, setMsg] = useState();
-
-    const handleChangeEmail = e => setEmail(e.target.value)
-    const handleChangePassword = e => setPassword(e.target.value)
-
-    const handleLogin = useCallback(() => {
-        clearErrors();
-    }, [clearErrors]);
-
-    const handleSubmit = async e => {
-        e.preventDefault();
-        const user = {email, password};
-
-        // Attempt to login
-        login(user);
-        clearErrors();
-    }
+const Login = () => {
+    const auth = useSelector(state => state.auth)
+    const error = useSelector(state => state.error)
+    const [msg, setMsg] = useState()
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        // Check for register error
+        //Check for login error
         if(error.id === 'LOGIN_FAIL') {
-            setMsg(error.msg.msg);
+            setMsg(error.msg.msg)
         } else {
-            setMsg(null);
+            setMsg(null)
         }
 
-        // If authenticated, idk do some stuff
-        if(active) {
-            if(isAuthenticated) {
-                handleLogin();
-            }
+        if(auth.isAuthenticated) {
+            clearErrors();
         }
-    }, [error, isAuthenticated, clearErrors]);
+    })
+
+    const schema = Yup.object().shape({
+        email: Yup.string().email('Invalid email format').required('Enter your email'),
+        password: Yup.string().required('Required')
+    })
 
     return(
         <Switch>
@@ -74,6 +52,8 @@ const Login = ({
 
                                 Sign In or Create an account to begin.
                             </p>
+                            <br/>
+                            <hr/>
                             <Link to="/signup">
                                 <Button>Create an Account</Button>
                             </Link>
@@ -83,26 +63,34 @@ const Login = ({
                             <p>
                                 Sign in to fill out forms and manage your account.
                             </p>
-                            <Form onSubmit={handleSubmit}>
-                                <Form.Group controlId="email">
-                                    <Form.Label srOnly="True">Email Address</Form.Label>
-                                    <Form.Control 
-                                    type="email" 
-                                    placeholder="Email Address"
-                                    onChange={handleChangeEmail}
-                                    />
-                                </Form.Group>
-                                <Form.Group controlId="password">
-                                    <Form.Label srOnly="true">Password</Form.Label>
-                                    <Form.Control 
-                                    type="password" 
-                                    placeholder="Password" 
-                                    onChange={handleChangePassword}
-                                    />
-                                </Form.Group>
-                                <button className="btn btn-primary" type="submit">Sign in</button>
-                                <p>Forgot your password? Click <Link to="/reset">here to reset</Link>  your password</p>                     
-                            </Form>
+                            {msg ? <Alert variant="danger">{msg}</Alert> : null}
+                            <Formik
+                                initialValues={{
+                                    email: '',
+                                    password: ''
+                                }}
+                                validationSchema={schema}
+                                onSubmit={(credentials, { setSubmitting }) => {
+                                    console.log(credentials)
+                                    dispatch(login(credentials))
+                                    dispatch(clearErrors())
+                                }}>
+                                    <Form>
+                                        <MyTextInput
+                                            label='Email'
+                                            name='email'
+                                            type='email'
+                                        />
+                                        <MyTextInput
+                                            label='Password'
+                                            name='password'
+                                            type='text'
+                                        />
+                                        <hr/>
+                                        <Button type="submit">Sign in</Button>
+                                        <p>Forgot your password? Click <Link to="/reset">here to reset</Link>  your password</p>   
+                                    </Form>                  
+                            </Formik>
                         </Col>
                     </Row>
                 </Card>
@@ -110,24 +98,7 @@ const Login = ({
             <Route path="/signup" component={Register} />
             <Route path="/reset" component={Reset} />
         </Switch>
-
-    );
-
+    )
 }
 
-Login.propTypes = {
-    isAuthenticated: PropTypes.bool,
-    error: PropTypes.object.isRequired,
-    login: PropTypes.func.isRequired,
-    clearErrors: PropTypes.func.isRequired
-}
-
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    error: state.error
-})
-
-export default connect(
-    mapStateToProps,
-    { login, clearErrors }
-)(Login);
+export default Login
