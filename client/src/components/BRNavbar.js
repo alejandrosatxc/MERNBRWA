@@ -1,14 +1,16 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import logo from '../img/brlogo_sm.png';
 import { logout } from '../actions/authActions'
 
 import '../css/stack-interface.css';
 const BRNavbar = () => {
-    //const dispatch = useDispatch();
+    const dispatch = useDispatch();
+    const auth = useSelector(state => state.auth)
 
     const handleLogout = () => {
-        logout();
+        dispatch(logout())
     }
     return(
         <Navbar id="menu1" className="lawnavbg" bg="light" expand="lg">
@@ -33,7 +35,7 @@ const BRNavbar = () => {
                     <Nav.Link href="http://www.bellripper.com/resources.html">Resources</Nav.Link>
                     <Nav.Link href="http://www.bellripper.com/contact-us.html">Contact Us</Nav.Link>
                     {/* TODO Create Signout/user portal button */}
-                    <Nav.Link onClick={handleLogout} href='#'>Logout</Nav.Link>
+                    {auth.isAuthenticated ? <Nav.Link onClick={handleLogout} href='#'>Logout</Nav.Link> : null}
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
