@@ -73,7 +73,7 @@ const Login = () => {
                                 }}
                                 validationSchema={schema}
                                 onSubmit={(credentials, { setSubmitting }) => {
-                                    credentials.email = credentials.email.toLocaleLowerCase()
+                                    credentials.email = credentials.email.toLowerCase()
                                     dispatch(login(credentials))
                                     dispatch(clearErrors())
                                 }}>
