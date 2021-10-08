@@ -50,7 +50,7 @@ const Register = () => {
                 }}
                 validationSchema={schema}
                 onSubmit={(user, { setSubmitting }) => {
-                    console.log(user)
+                    user.email = user.email.toLowerCase()
                     dispatch(register(user))
                     setSubmitting(false)
                 }}

@@ -13,10 +13,12 @@ import Register from './Register'
 import Reset from './Reset'
 
 const Login = () => {
+
+    const dispatch = useDispatch()
     const auth = useSelector(state => state.auth)
     const error = useSelector(state => state.error)
     const [msg, setMsg] = useState()
-    const dispatch = useDispatch()
+    
 
     useEffect(() => {
         //Check for login error
@@ -71,7 +73,7 @@ const Login = () => {
                                 }}
                                 validationSchema={schema}
                                 onSubmit={(credentials, { setSubmitting }) => {
-                                    console.log(credentials)
+                                    credentials.email = credentials.email.toLocaleLowerCase()
                                     dispatch(login(credentials))
                                     dispatch(clearErrors())
                                 }}>
