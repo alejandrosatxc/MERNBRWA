@@ -13,14 +13,14 @@ import { loadSurvey, loadUserResponses } from '../actions/formActions'
 //Survey.defaultBootstrapCss.navigationButton = "btn btn-green";
 
 //get a survey from mongoDB
-const SurveyViewer = () => {
+const SurveyViewer = ({surveyid}) => {
     
 
     const id = useSelector(state => state.auth.user._id)
     const survey = useSelector(state => state.form.survey)
     const userSubmission = useSelector(state => state.form.userSubmission)
     const dispatch = useDispatch();
-    const surveyid = 1; //TODO Fix this, causing a lot of problems when reading as null or undefined
+    //const surveyid = 1; //TODO Fix this, causing a lot of problems when reading as null or undefined
     //const userSurvey = {surveyid, id}
 
     useEffect(() => {
