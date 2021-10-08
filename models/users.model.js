@@ -3,13 +3,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const usersSchema = new Schema({
+
+    role: {type: String, required: true, default: "Client"},
     firstName: { type: String, required: true, default: null },
     lastName: { type: String, required: true, default: null },
     email: { type: String, required: true, default: null, unique: true },
     emailverifycode: { type : String, default: null },
     password: { type: String, default: null},
-    //hash: { type: String, required: true, default: null },
-    //salt: { type: String, required: true, default: null },
     pwresetcode: { type: String, default: null },
     pwresetdata: { type: Date, default: null },
     active: { type: Boolean, default: null },
@@ -18,6 +18,7 @@ const usersSchema = new Schema({
     sessioncode: { type: String, default: null },
     lastaccess: { type: Date, default: null },
     intake_complete: { type: Number, default: null},
+    active_forms: {type: Array, default: []}, //An array of objects describing the active arrays
     phone: { type: String, default: null },
     address: { type: String, default: null },
     city: { type: String, default: null },
