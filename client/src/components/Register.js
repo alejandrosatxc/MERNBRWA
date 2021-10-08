@@ -74,7 +74,7 @@ const Register = () => {
                     <MyTextInput
                         label="Password"
                         name="password"
-                        type="text"
+                        type="password"
                     />
                     <hr/>
                     <Button type="submit">Register</Button>

@@ -84,7 +84,7 @@ const Login = () => {
                                         <MyTextInput
                                             label='Password'
                                             name='password'
-                                            type='text'
+                                            type='password'
                                         />
                                         <hr/>
                                         <Button type="submit">Sign in</Button>
