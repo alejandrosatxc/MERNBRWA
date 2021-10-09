@@ -80,11 +80,12 @@ router.route('/submit').post((req, res) => {
     const mg = mailgun({apiKey: "91dc585d7ea62bbce58e9a3e002a8f81-6ae2ecad-f03fc7ac", domain: DOMAIN});
 
     const userResponses = req.body.data;
-    const usurveyid = req.body._id;
+    const usurveyid = req.body.userid;
     const active = 1;
+    const form_status = "complete" //TODO for now default to complete, later check for unfinished or not started forms
     const surveyid = req.body.surveyid;
     //TODO add logic for UPDATING an existing userSubmission
-    const newUserSubmission = new userSubmission({userResponses, usurveyid, active, surveyid})
+    const newUserSubmission = new userSubmission({userResponses, usurveyid, active, form_status, surveyid})
     //Send mailgun email to ana containing the results of userResponses 
     surveyData = JSON.stringify(userResponses, null, 2);
 
@@ -123,13 +124,14 @@ router.route('/submit').post((req, res) => {
                         "dob" : userResponses.dob,
                         "emergency_name" : userResponses.emergency_contact.first_name + " " + userResponses.emergency_contact.last_name,
                         "emergency_phone" : userResponses.emergency_contact.e_phone,
-                        "emergency_relationship" : userResponses.emergency_contact.relationship
+                        "emergency_relationship" : userResponses.emergency_contact.relationship,
+                        $push : {"active_forms" : { form_id : newUserSubmission._id, surveyid: surveyid}} //add completed form to user's list of active forms      
                     },
                     (res, err) => {
                         if(err) {
                             console.log(err)
                         } else {
-                            console.log("Updated user intake_complete!")
+                            console.log("Updated user intake_complete! for user: " + usurveyid)
                         }
                     })
             }

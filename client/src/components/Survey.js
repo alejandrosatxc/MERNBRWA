@@ -16,7 +16,7 @@ import { loadSurvey, loadUserResponses } from '../actions/formActions'
 const SurveyViewer = ({surveyid, surveyMode}) => {
     
 
-    const id = useSelector(state => state.auth.user._id)
+    const user = useSelector(state => state.auth.user)
     const survey = useSelector(state => state.form.survey)
     const userSubmission = useSelector(state => state.form.userSubmission)
     const dispatch = useDispatch();
@@ -25,12 +25,12 @@ const SurveyViewer = ({surveyid, surveyMode}) => {
 
     useEffect(() => {
         dispatch(loadSurvey(surveyid)); //intake is the default for now
-        dispatch(loadUserResponses(surveyid, id)) //get resposes from intake matching with userid
+        dispatch(loadUserResponses(surveyid, user._id)) //get resposes from intake matching with userid
     }, []); //As of now passin an empty array to useEffect will cause
             //useEffect to only run on the initial render
 
     //TODO this needs to be a redux action and moved out of this component as such.
-    function sendDataToServer(currentSurvey, user) {
+    function sendDataToServer(currentSurvey) {
         //send Ajax request to your web server.
         console.log("The results are:" + JSON.stringify(currentSurvey.data));
         const config = {
@@ -38,12 +38,11 @@ const SurveyViewer = ({surveyid, surveyMode}) => {
                 'Content-Type' : 'application/json'
             }
         }
-        const _id = id; //userid
+        const userid = user._id; //userid
         const data = currentSurvey.data; //The data that is to be sent to the server
         const surveyid = survey.surveyid;
 
-        const body = JSON.stringify({data, _id, surveyid}); //send survey resposnses, userid, and the survey they completed
-        console.log(body);
+        const body = JSON.stringify({data, userid, surveyid}); //send survey resposnses, userid, and the survey they completed
         
         axios.post('/api/surveys/submit', body, config)
             .then(res => {
