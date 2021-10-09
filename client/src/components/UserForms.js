@@ -1,33 +1,32 @@
 import React from 'react'
-import { Card } from 'react-bootstrap'
-import * as Survey from 'survey-react'
-import { loadSurvey, loadUserResponses } from '../actions/formActions'
-
-Survey.StylesManager.applyTheme("bootstrap");
-Survey.defaultBootstrapCss.navigationButton = "btn btn-green";
+import { Card, Container, Row, Col, Button } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
 
 //This component will show a list of all form a user has completed
 //and allow them to review thier submission
 const UserForms = () => {
 
-    const id = useSelector(state => state.auth.user._id)
-    const survey = useSelector(state => state.form.survey)
-    const userSubmission = useSelector(state => state.form.userSubmission)
-    const dispatch = useDispatch();
-    const surveyid = 1;
+    const user = useSelector(state => state.auth.user)
 
-    useEffect(() => {
-        dispatch(loadSurvey(surveyid)); //intake is the default for now
-        dispatch(loadUserResponses(surveyid, id)) //get resposes from intake matching with userid
-    }, []);
-
+    const formList = user.active_forms.map((form, index) => {
+        return (
+            <Card>
+                <Card.Img variant="top"/>
+                <Card.Body>
+                    <Card.Title>Surveyid: {form.surveyid}</Card.Title>
+                    <Card.Text>Form status: {form.form_status}</Card.Text>
+                    <Button variant="primary">View</Button>
+                </Card.Body>
+            </Card>
+        )
+    })
     return(
         <Card>
-            <Survey.Survey
-                data={userSubmission ? userSubmission.userResponses: null}
-                json={survey.surveyJSON}
-                mode='display'
-            />
+           <Container>
+                <Row>
+                    {formList}
+                </Row>
+           </Container>
         </Card>
     )
 }
