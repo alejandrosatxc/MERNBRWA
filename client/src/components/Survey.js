@@ -13,7 +13,7 @@ import { loadSurvey, loadUserResponses } from '../actions/formActions'
 //Survey.defaultBootstrapCss.navigationButton = "btn btn-green";
 
 //get a survey from mongoDB
-const SurveyViewer = ({surveyid}) => {
+const SurveyViewer = ({surveyid, surveyMode}) => {
     
 
     const id = useSelector(state => state.auth.user._id)
@@ -65,7 +65,8 @@ const SurveyViewer = ({surveyid}) => {
                     json={survey.surveyJSON}
                     onComplete={sendDataToServer} 
                     showPreviewBeforeComplete='showAnsweredQuestions'
-                    completedHtml='Thank you for completing this form, a lawyer will review this information'/>
+                    completedHtml='Thank you for completing this form, a lawyer will review this information'
+                    mode={surveyMode}/>
                 : <h1>no surveyJSON</h1>
             }
         </> //TODO change the header to be link to send feedback/usage stats
