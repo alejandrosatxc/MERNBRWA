@@ -125,7 +125,12 @@ router.route('/submit').post((req, res) => {
                         "emergency_name" : userResponses.emergency_contact.first_name + " " + userResponses.emergency_contact.last_name,
                         "emergency_phone" : userResponses.emergency_contact.e_phone,
                         "emergency_relationship" : userResponses.emergency_contact.relationship,
-                        $push : {"active_forms" : { form_id : newUserSubmission._id, surveyid: surveyid}} //add completed form to user's list of active forms      
+                        $push : {"active_forms" : { 
+                            form_id : newUserSubmission._id,
+                            surveyid: surveyid,
+                            form_status: form_status
+                            }
+                        } //add completed form to user's list of active forms      
                     },
                     (res, err) => {
                         if(err) {
