@@ -46,11 +46,11 @@ const Login = () => {
                         <Col>
                             <h3> User Portal</h3>
                             <p>
-                                The User Portal allows you to fill out forms so that your documents may be generated
-                                for review by an attorney. The forms will be available to fill out at your leisure and will
-                                provide you a preview of your documents as you fill out the forms.
-                                The final documents, that were reviewed by an attorney, will then be uploaded to the
-                                User Portal for your review.
+                                The User Portal allows you to securely provide information to our law firm. Throughout your
+                                time as a client with us, you may be asked to fill out forms in this secure portal so that we may
+                                quickly generate documents for your case. The final documents will be uploaded to the User Portal
+                                for your review and future access. You will recieve electronic notification when a new document is
+                                added.
 
                                 Sign In or Create an account to begin.
                             </p>
