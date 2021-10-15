@@ -5,7 +5,7 @@ import { Formik, Form } from 'formik'
 import { useSelector } from 'react-redux'
 import MyTextInput from './MyTextInput'
 
-const Useraccount = ({...props}) => {
+const UserAccount = ({...props}) => {
 
     const user = useSelector(state => state.auth.user);
     return (
@@ -117,4 +117,4 @@ const Useraccount = ({...props}) => {
     )
 }
 
-export default Useraccount
+export default UserAccount
