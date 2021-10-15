@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Card, Tab, Tabs } from 'react-bootstrap'
+import { Card, Tab, Tabs, Nav } from 'react-bootstrap'
 
 import { Link } from 'react-router-dom'
 import { logout } from '../actions/authActions'
