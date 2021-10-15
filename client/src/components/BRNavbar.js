@@ -13,7 +13,7 @@ const BRNavbar = () => {
         dispatch(logout())
     }
     return(
-        <Navbar id="menu1" className="lawnavbg" bg="light" expand="lg">
+        <Navbar sticky="top" id="menu1" className="lawnavbg" bg="light" expand="lg">
             <Navbar.Brand href="#home">
                 <img 
                 src={logo}
