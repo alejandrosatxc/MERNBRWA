@@ -19,6 +19,7 @@ const usersSchema = new Schema({
     lastaccess: { type: Date, default: null },
     intake_complete: { type: Number, default: null},
     active_forms: {type: Array, default: []}, //An array of objects describing the active arrays
+    user_documents: {type: Array, default: []}, //An Array ofobjects descrbinge documents the user has
     phone: { type: String, default: null },
     address: { type: String, default: null },
     city: { type: String, default: null },
