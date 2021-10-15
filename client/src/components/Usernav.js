@@ -5,9 +5,12 @@ import { Card, Nav, NavLink } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { logout } from '../actions/authActions'
 
-const Usernav = () => {
+const UserNav = () => {
     const dispatch = useDispatch();
-    const username = useSelector(state => state.auth.user.firstName + " " + state.auth.user.lastName)
+    const user = useSelector(state => state.auth.user)
+
+    const username = user.firstName + ' ' + user.lastName
+
     const handleLogout = () => {
         dispatch(logout())
     }
@@ -15,15 +18,20 @@ const Usernav = () => {
         <Card>
             <Nav className="flex-column">
                 <h2>{username}</h2>
-                <Nav.Item><Link to="/dashboard">Home</Link></Nav.Item>
-                <Nav.Item><Link to="/dashboard/survey">Intake</Link></Nav.Item>
-                <Nav.Item><Link to="/dashboard/account">My Account</Link></Nav.Item>
+                <Nav.Item><Link to="/myforms">My Forms</Link></Nav.Item>
+                <Nav.Item><Link to="/mydocuments">My Documents</Link></Nav.Item>
+                <Nav.Item><Link to="/account">Account</Link></Nav.Item>
+                {user.role === "Admin"
+                    ? <Nav.Item><Link to="/manageusers">Manage Users</Link></Nav.Item>
+                    : null                   
+                }
+                {}
                 <Nav.Item>
-                    <NavLink onClick={handleLogout} href='#'>Logout</NavLink>
+                    <Link to="/" onClick={handleLogout}>Logout</Link>
                 </Nav.Item>
             </Nav>
         </Card>
     )
 }
 
-export default Usernav
+export default UserNav
