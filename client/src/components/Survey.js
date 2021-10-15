@@ -5,6 +5,7 @@ import "survey-react/survey.css";
 import axios from 'axios'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useParams, withRouter } from 'react-router-dom'
  
 import { loadSurvey, loadUserResponses } from '../actions/formActions'
 
@@ -13,19 +14,18 @@ import { loadSurvey, loadUserResponses } from '../actions/formActions'
 //Survey.defaultBootstrapCss.navigationButton = "btn btn-green";
 
 //get a survey from mongoDB
-const SurveyViewer = ({surveyid, surveyMode}) => {
+const SurveyViewer = (props) => {
     
 
     const user = useSelector(state => state.auth.user)
     const survey = useSelector(state => state.form.survey)
     const userSubmission = useSelector(state => state.form.userSubmission)
     const dispatch = useDispatch();
-    //const surveyid = 1; //TODO Fix this, causing a lot of problems when reading as null or undefined
-    //const userSurvey = {surveyid, id}
+    const { surveyid, surveyMode, userSubmission_id } = useParams();
 
     useEffect(() => {
         dispatch(loadSurvey(surveyid)); //intake is the default for now
-        dispatch(loadUserResponses(surveyid, user._id)) //get resposes from intake matching with userid
+        dispatch(loadUserResponses(userSubmission_id)) //get resposes from a specific document _id
     }, []); //As of now passin an empty array to useEffect will cause
             //useEffect to only run on the initial render
 
@@ -41,16 +41,24 @@ const SurveyViewer = ({surveyid, surveyMode}) => {
         const userid = user._id; //userid
         const data = currentSurvey.data; //The data that is to be sent to the server
         const surveyid = survey.surveyid;
+        //const userSubmission_id = 
+        //if(surveyid === 2) {
+            //const form_id = 
+      //      const body = JSON.stringify({data, userid, surveyid}); //send survey resposnses, userid, and the survey they completed
+    //    }
 
-        const body = JSON.stringify({data, userid, surveyid}); //send survey resposnses, userid, and the survey they completed
-        
+        const body = JSON.stringify({data, userid, surveyid, userSubmission_id}); //send survey resposnses, userid, and the survey they completed
+
         axios.post('/api/surveys/submit', body, config)
             .then(res => {
                 console.log(res)
-            })
+                //On sucessfull submission, redirect to /myforms after 4 seconds
+                setTimeout(() => {props.history.push('/myforms')})
+            }, 4000)
             .catch(err => {
                 console.log(err)
             })
+        
     }
     //TODO add a check to see if user has completed a survey by id. If they have, (or partially completed), search for that 
     //survey by usurveyid, and set the survey fields to the data they have previously responded with.
@@ -66,7 +74,7 @@ const SurveyViewer = ({surveyid, surveyMode}) => {
                     showPreviewBeforeComplete='showAnsweredQuestions'
                     completedHtml='Thank you for completing this form, a lawyer will review this information'
                     mode={surveyMode}/>
-                : <h1>no surveyJSON</h1>
+                : <h1>Surveyid: {surveyid} surveyMode: {surveyMode}</h1>
             }
         </> //TODO change the header to be link to send feedback/usage stats
             //Or make the no survey message a survey selection panel where the user
@@ -77,4 +85,4 @@ const SurveyViewer = ({surveyid, surveyMode}) => {
 
 
 
-export default SurveyViewer
+export default withRouter(SurveyViewer)
