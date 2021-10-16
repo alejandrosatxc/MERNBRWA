@@ -5,7 +5,7 @@ import "survey-react/survey.css";
 import axios from 'axios'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams, withRouter } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
  
 import { loadSurvey, loadUserResponses } from '../actions/formActions'
 
@@ -14,7 +14,7 @@ import { loadSurvey, loadUserResponses } from '../actions/formActions'
 //Survey.defaultBootstrapCss.navigationButton = "btn btn-green";
 
 //get a survey from mongoDB
-const SurveyViewer = (props) => {
+const SurveyViewer = () => {
     
 
     const user = useSelector(state => state.auth.user)
@@ -22,6 +22,7 @@ const SurveyViewer = (props) => {
     const userSubmission = useSelector(state => state.form.userSubmission)
     const dispatch = useDispatch();
     const { surveyid, surveyMode, userSubmission_id } = useParams();
+    const history = useHistory();
 
     useEffect(() => {
         dispatch(loadSurvey(surveyid)); //intake is the default for now
@@ -41,24 +42,26 @@ const SurveyViewer = (props) => {
         const userid = user._id; //userid
         const data = currentSurvey.data; //The data that is to be sent to the server
         const surveyid = survey.surveyid;
-        //const userSubmission_id = 
-        //if(surveyid === 2) {
-            //const form_id = 
-      //      const body = JSON.stringify({data, userid, surveyid}); //send survey resposnses, userid, and the survey they completed
-    //    }
-
+   
         const body = JSON.stringify({data, userid, surveyid, userSubmission_id}); //send survey resposnses, userid, and the survey they completed
 
         axios.post('/api/surveys/submit', body, config)
             .then(res => {
                 console.log(res)
-                //On sucessfull submission, redirect to /myforms after 4 seconds
-                setTimeout(() => {props.history.push('/myforms')})
-            }, 4000)
+            })
             .catch(err => {
                 console.log(err)
             })
-        
+        //TODO redirect on confirmation of surveydoc saved. could the response include a function with a timeout and redirect?
+        //TODO fix garbage code here
+        setTimeout(() => {
+            if(user.role === 'Client' && surveyid === 1) {
+                user.intake_complete = 1
+                history.push('/myforms')
+            } else if(user.role === 'Admin' && surveyid === 2) {
+                history.push('/mydocuments')
+            }
+        }, 3000)       
     }
     //TODO add a check to see if user has completed a survey by id. If they have, (or partially completed), search for that 
     //survey by usurveyid, and set the survey fields to the data they have previously responded with.
@@ -83,6 +86,4 @@ const SurveyViewer = (props) => {
     )
 }
 
-
-
-export default withRouter(SurveyViewer)
+export default SurveyViewer
