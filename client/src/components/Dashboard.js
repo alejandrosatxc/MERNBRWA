@@ -1,6 +1,7 @@
 import React, { useEffect }from 'react';
 import { Route, withRouter, useLocation } from 'react-router-dom'
 import Survey from './Survey'
+import Document from './Document'
 import UserNav from './UserNav'
 import UserAccount from './UserAccount'
 import UserForms from './UserForms';
@@ -29,6 +30,7 @@ const Dashboard = (props) => {
       <Route path="/mydocuments" component={UserDocuments} />
       <Route path="/account" component={UserAccount} />
       <Route path="/form/:surveyid/:surveyMode/:userSubmission_id" component={Survey} />
+      <Route path="/document/:document_id" component={Document}/>
       {
         (auth.user.role === 'Admin')
         ? <Route path="/manageusers" component={ManageUsers} />

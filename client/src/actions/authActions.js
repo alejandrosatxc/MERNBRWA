@@ -11,7 +11,8 @@ import {
     REGISTER_SUBMIT,
     REGISTER_SUCCESS,
     REGISTER_FAIL,
-    CLEAR_FORM
+    CLEAR_FORM,
+    CLEAR_DOCUMENT
 } from './types';
 //TODO Survey types/actions and functions need their own file
 //Check token & load user
@@ -92,6 +93,7 @@ export const login = ({ email, password }) => dispatch => {
 //TODO redirect to signin page after logout
 export const logout = () => (dispatch) => {
     dispatch({type: CLEAR_FORM}) //Clear all survey and userSubmission data
+    dispatch({type: CLEAR_DOCUMENT}) //Clear any document data
     dispatch({type: LOGOUT_SUCCESS}) //Clear all auth/user data
 };
 
