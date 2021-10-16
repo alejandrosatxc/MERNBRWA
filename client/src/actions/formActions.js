@@ -47,7 +47,7 @@ export const loadUserResponses = (_id) => (dispatch) => {
           payload: res.data
       }))
       .catch(err => {
-          dispatch(returnErrors(err.resposonse.data, err.response.status)); //TODO fix this shit
+          dispatch(returnErrors(err.response.data, err.response.status)); //TODO fix this shit
           dispatch({
               type: USERSUBMISSION_FAIL
           })
