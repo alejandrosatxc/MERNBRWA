@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
         return res.status(400).json({msg: "surveyid not specified"});
     }
 
-    //Find a survey by the provided id
+    //Find a survey by the provided surveyid
     Survey.findOne({ surveyid })
         .then(survey => res.json(survey)) //return the entire survey doc
         .catch(err => res.status(400).json("Error: Survey does not exist" + err));
