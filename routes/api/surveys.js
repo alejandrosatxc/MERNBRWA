@@ -187,58 +187,47 @@ router.route('/submit').post((req, res) => {
                 res.json('User survey updated!');
 
             } else if (surveyid === 2) { //If attorney form, create LOR
-                //TODO FIX THIS GOT DAMN SPAGHETTI
-                var intakeid = ''
-                //Get corresponding intake form id
-                User.findById({_id: '6167616de9a3793f62eb325e'}) //Get admin
-                    .then((user) => {
-                        user.active_forms.forEach((form) => {
-                            if(form.form_id.equals(userSubmission_id)) {
-                                intakeid = form.userform_id
-                            }
-                        })
-                    })
-                    .then(() => {
-                        //fetch intake responses
-                        userSubmission.findById({_id: intakeid})
-                            .then((userSubmission) => {
-                                const intake_responses = userSubmission.userResponses
-                                //combine intake and attorneyy form responses
-                                let fieldsForLOR = {
-                                    ...intake_responses,
-                                    ...userResponses
-                                }
-                                //Create new document using the fields from both intake and attorney form
-                                const LOR = new Document ({
-                                    uuid: usurveyid, //admins id
-                                    fields: fieldsForLOR
-                                })
-                                //Save document to db
-                                LOR.save()
-                                    .then(() => {
-                                        //Update admins list of documents
-                                        User.findByIdAndUpdate("6167616de9a3793f62eb325e", { //
-                                            $push : { "user_documents" : {
-                                                udoc_id: LOR._id,
-                                                name: "Letters of Representation"
-                                            }}
-                                        }, (res, err) => {
-                                            if(err) {
-                                                console.log("error here " + err)
-                                            } else {
-                                                console.log("result here" + res)
-                                            }
-                                        })
-                                })                   
-                            })
-                    })
-                    .catch((err) => {
-                        console.log("shit, here's an error" + err)
-                        //res.status(400).json("We are triggering this! intake not found")
-                    })
+                processAttorneyForm(userSubmission_id, usurveyid, userResponses)
             }
         })
         .catch(err => res.status(400).json('userResponses received: ' + JSON.stringify(userResponses) + '\nError: ' + err));    
 }) 
+
+const processAttorneyForm = async (attorneyForm_id, usurveyid, userResponses) => {
+    //Using the attorney form _id, Find the coressponding intake form _id 
+    const intakeid = await User.findById({ _id: '6167616de9a3793f62eb325e'})
+        .then(admin => admin.active_forms.find(form => form.form_id.equals(attorneyForm_id)).userform_id)
+        .catch(err => console.log("Error admin not found " + err))
+    //Get the userResponses from the corressponding intake form 
+    const intake_responses = await userSubmission.findById({ _id: intakeid})
+        .then(userSubmission => userSubmission.userResponses)
+        .catch(err => console.log("Error userSubmission not found " + err))
+    //Create new document using the userResponses from both attorney form and corressponding attorney form
+    const LOR = new Document ({
+        uuid: usurveyid, //admins id
+        fields: {
+            ...intake_responses,
+            ...userResponses
+        }
+    })
+
+    //Save form to DB
+    LOR.save()
+        .then(() => {
+            //Update admins list of documents
+            User.findByIdAndUpdate("6167616de9a3793f62eb325e", { //
+                $push : { "user_documents" : {
+                    udoc_id: LOR._id,
+                    name: "Letters of Representation"
+                }}
+            }, (res, err) => {
+                if(err) {
+                    console.log("error here " + err)
+                } else {
+                    console.log("result here" + res)
+                }
+            })
+        })    
+}
 
 module.exports = router;
