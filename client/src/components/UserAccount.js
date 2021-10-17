@@ -5,9 +5,10 @@ import { Formik, Form } from 'formik'
 import { useSelector } from 'react-redux'
 import MyTextInput from './MyTextInput'
 
-const UserAccount = ({...props}) => {
+const UserAccount = () => {
 
     const user = useSelector(state => state.auth.user);
+    //TODO add Formik Yup validation
     return (
       <Card>
         <Container>
