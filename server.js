@@ -23,11 +23,13 @@ const usersRouter = require('./routes/api/users');
 const surveysRouter = require('./routes/api/surveys');
 const authRouter = require('./routes/api/auth');
 const documentsRouter = require('./routes/api/documents');
+const userSubmissionsRouter = require('./routes/api/userSubmissions')
 
 app.use('/api/users', usersRouter);
 app.use('/api/surveys', surveysRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/documents', documentsRouter);
+app.use('/api/userSubmissions', userSubmissionsRouter)
 
 // Serve static assets if in production
 if(process.env.NODE_ENV === 'production') {
