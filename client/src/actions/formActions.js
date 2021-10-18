@@ -41,7 +41,7 @@ export const loadUserResponses = (_id) => (dispatch) => {
     dispatch({type: USERSUBMISSION_LOADING});
     //TODO fix this so the URI here doesn't look so ugly. Use params? 
     
-    axios.get('/api/surveys/usersubmissions?_id='+_id) //send unique userSubmission_id
+    axios.get('/api/usersubmissions?_id='+_id) //send unique userSubmission_id
       .then(res => dispatch({
           type: USERSUBMISSION_LOADED,
           payload: res.data
