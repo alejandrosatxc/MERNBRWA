@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 import { loadDocument } from '../actions/documentActions'
+import RecursiveProperty from './RecursiveProperty.tsx'
+
 
 const Document = () => {
     const { document_id } = useParams()
@@ -15,19 +17,12 @@ const Document = () => {
         dispatch(loadDocument(document_id))
     },[])
  
-    const handleLoad = () => {
-        
-        if(document.document.fields) {
-            return JSON.stringify(document.document.fields,null,2)
-        } else {
-            return "ok"
-        }
-    }
     return (
         <Card>
-            <p>{document.document
-                ? handleLoad()
-                : null }</p>
+            {document.document
+                ? <RecursiveProperty property={document.document.fields ? document.document.fields : null} propertyName="Root Property" excludeBottomBorder={false} rootProperty={true}/>
+                : <p>Nothing here</p> 
+            }
         </Card>
     )
 }

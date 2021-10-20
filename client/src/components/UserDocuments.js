@@ -1,11 +1,12 @@
 import React from 'react' 
-import { Card, Container, Row, Col, Button } from 'react-bootstrap'
+import { Card, Container, Row } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 const UserDocuments = () => {
 
     const user = useSelector(state => state.auth.user)
+   
     const documentList = user.user_documents.map((doc, idx) => {
         //TODO Create links/route to user documents
         return (
