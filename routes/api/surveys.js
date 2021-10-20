@@ -107,8 +107,8 @@ const sendEmail = (userResponses, toEmailAddress) => {
     }
     
     mg.messages().send(emailData, function (error, body) {
-        console.log(body)
-        console.log(error)
+        //console.log(body)
+        //console.log(error)
     })
 }
 
@@ -191,8 +191,8 @@ const processAttorneyForm = async (attorneyForm_id, usurveyid, userResponses) =>
     const LOR = new Document ({
         uuid: usurveyid, //admins id
         fields: {
-            ...intake_responses,
-            ...userResponses
+            intakeForm : intake_responses,
+            attorneyForm :  userResponses
         }
     })
 
@@ -207,7 +207,7 @@ const processAttorneyForm = async (attorneyForm_id, usurveyid, userResponses) =>
                 }}
             }, (res, err) => {
                 if(err) {
-                    console.log("error here " + err)
+                    console.log("error here " + err) //this is being printed as if it's returning an error
                 } else {
                     console.log("result here" + res)
                 }
