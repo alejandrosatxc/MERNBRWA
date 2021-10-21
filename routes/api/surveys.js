@@ -87,8 +87,8 @@ const sendEmail = (userResponses, toEmailAddress) => {
     const mg = mailgun({apiKey: "91dc585d7ea62bbce58e9a3e002a8f81-6ae2ecad-f03fc7ac", domain: DOMAIN});
 
     //Create email to send to admin
-    firstName = "<tr><td>First Name</td><td>" + userResponses.legal_name.first_name + "</td></tr>"
-    lastName = "<tr><td>Last Name</td><td>" + userResponses.legal_name.last_name + "</td></tr>"
+    firstName = "<tr><td>First Name</td><td>" + userResponses.legalName.firstName + "</td></tr>"
+    lastName = "<tr><td>Last Name</td><td>" + userResponses.legalName.lastName + "</td></tr>"
     email = "<tr><td>Email</td><td>" + userResponses.email + "</td></tr>"
     phone = "<tr><td>Phone</td><td>" + userResponses.phone + "</td></tr>"
     street = "<tr><td>Street</td><td>" + userResponses.street + "</td></tr>"
