@@ -70,7 +70,7 @@ router.route('/submit').post((req, res) => {
         .then(() => {
             if(surveyid === 1) { //If survey was intake, update intake_complete field and user doc, ADD attorney form to admin
                 processIntakeForm(userResponses, usurveyid, userSubmission_id)
-                sendEmail(userResponses, 'alejandro@satxconsultants.com')
+                sendEmail(userResponses, 'ana@bellripper.com')
                 res.json('User survey updated!');
             } else if (surveyid === 2) { //If attorney form, create LOR
                 processAttorneyForm(userSubmission_id, usurveyid, userResponses)
