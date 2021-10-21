@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { Card } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import axios from 'axios'
 import { loadDocument } from '../actions/documentActions'
 import RecursiveProperty from './RecursiveProperty.tsx'
 
@@ -20,7 +19,11 @@ const Document = () => {
     return (
         <Card>
             {document.document
-                ? <RecursiveProperty property={document.document.fields ? document.document.fields : null} propertyName="Root Property" excludeBottomBorder={false} rootProperty={true}/>
+                ? <RecursiveProperty 
+                    property={document.document.fields ? document.document.fields : null} 
+                    propertyName="Root Property" 
+                    excludeBottomBorder={false} 
+                    rootProperty={true} />
                 : <p>Nothing here</p> 
             }
         </Card>

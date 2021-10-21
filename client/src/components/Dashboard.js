@@ -1,5 +1,5 @@
 import React, { useEffect }from 'react';
-import { Route, withRouter, useLocation } from 'react-router-dom'
+import { Route, useHistory, useLocation } from 'react-router-dom'
 import Survey from './Survey'
 import Document from './Document'
 import UserNav from './UserNav'
@@ -13,13 +13,14 @@ const Dashboard = (props) => {
   //TODO if intakes are complete, give user the option to review the last intake form they have submitted
   const userIntakeComplete = useSelector(state => state.auth.user.intake_complete)
   const auth = useSelector(state => state.auth)
+  const history = useHistory();
   const location = useLocation();
 
   //The dynamic form route will be set in the UserForms component via a click by the user
 
   useEffect(() => {
     if(!userIntakeComplete && auth.user.role === "Client" ) {
-      props.history.push(`/form/1/edit/${auth.user.active_forms[0].form_id}`) //Force an intake survey
+      history.push(`/form/1/edit/${auth.user.active_forms[0].form_id}`) //Force an intake survey
     }
   }, [auth.user, location.pathname]) //Only run when user logs/loads in or user tries to navigate away
 
@@ -40,4 +41,4 @@ const Dashboard = (props) => {
   );
 }
 
-export default withRouter(Dashboard)
+export default Dashboard

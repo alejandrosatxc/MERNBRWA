@@ -5,11 +5,21 @@ require('dotenv').config();
 
 //User Model
 const User = require('../../models/users.model');
-const userSubmissions = require('../../models/usersubmissions.model')
 const bcrypt = require('bcryptjs');
 const { config } = require('dotenv');
 const userSubmission = require('../../models/usersubmissions.model');
 
+//TODO Add GET logic for users
+
+// @route   GET api/users
+// @desc    Get a user from DB
+// @access  Private
+/*
+router.get('/', (req, res) => {
+    //Im thinking there should be a get all users and a get 1 user.
+    //What's better, a single call that returns all users, or a many single user calls to return all of them? 
+})
+*/
 // @route   POST  api/users
 // @desc    Register new user
 // @access  Public
