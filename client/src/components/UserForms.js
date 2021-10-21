@@ -39,7 +39,6 @@ const UserForms = () => {
                             : null
                         }
                     </Card.Text>
-
                     <Link to={`/form/${form.surveyid}/${surveyMode}/${form.form_id}`}>{(surveyMode === 'display') ? "View" : "Edit"}</Link>
                     <br/>
                     {

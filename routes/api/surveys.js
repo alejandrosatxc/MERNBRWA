@@ -122,17 +122,13 @@ const processIntakeForm = (userResponses, usurveyid, userSubmission_id) => {
         "zip" : userResponses.zip,
         "phone" : userResponses.phone,
         "citizen" : userResponses.citizen,
-        "dob" : userResponses.dob,
-        "emergency_name" : userResponses.emergencyContact.firstName + " " + userResponses.emergencyContact.lastName,
-        "emergency_phone" : userResponses.emergencyContact.emergencyPhone,
-        "emergency_relationship" : userResponses.emergencyContact.relationship,
-        //TODO update form_status for every submission
-        /*$push : {"active_forms" : { 
-            form_id : newUserSubmission._id,
-            surveyid: surveyid,
-            form_status: form_status
-            }
-        }*/ //add completed form to user's list of active forms      
+        "dateOfBirth" : userResponses.dateOfBirth,
+        "emergencyContact" : {
+            "firstName" : userResponses.emergencyContact.firstName,
+            "lastName" : userResponses.emergencyContact.lastName,
+            "relationship" : userResponses.emergencyContact.relationship,
+            "phone" : userResponses.emergencyContact.emergencyPhone
+        }
     },
     (res, err) => {
         if(err) {
@@ -196,6 +192,8 @@ const processAttorneyForm = async (attorneyForm_id, usurveyid, userResponses) =>
         }
     })
 
+    //For username
+    const username = Object.values(userResponses.legalName).join(' ')
     //Save form to DB
     LOR.save()
         .then(() => {
@@ -203,7 +201,8 @@ const processAttorneyForm = async (attorneyForm_id, usurveyid, userResponses) =>
             User.findByIdAndUpdate("6167616de9a3793f62eb325e", { //admin id
                 $push : { "user_documents" : {
                     udoc_id: LOR._id,
-                    name: "Letters of Representation"
+                    name: "Letters of Representation",
+                    username: username
                 }}
             }, (res, err) => {
                 if(err) {
