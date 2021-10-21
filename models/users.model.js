@@ -38,7 +38,7 @@ const usersSchema = new Schema({
     //emergency_phone: { type: String, default: null },
     //emergency_relationship: { type: String, default: null },
     //finalize_usurveyid: { type: Number, default: null },
-    attorney: { type: mongoose.Types.ObjectId(), default: null} //could add ref: attribute to indicate doctype
+    attorney: { type: mongoose.Types.ObjectId, default: null} //could add ref: attribute to indicate doctype
 }, {
     timestamps: true,
 });
