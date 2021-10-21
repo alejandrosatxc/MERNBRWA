@@ -193,7 +193,7 @@ const processAttorneyForm = async (attorneyForm_id, usurveyid, userResponses) =>
     })
 
     //For username
-    const username = Object.values(userResponses.legalName).join(' ')
+    const username = Object.values(intake_responses.legalName).join(' ')
     //Save form to DB
     LOR.save()
         .then(() => {
