@@ -14,7 +14,7 @@ const UserDocuments = () => {
                 <Card.Img variant="top"/>
                 <Card.Body>
                     <Card.Title>{doc.name}</Card.Title>
-                    <Card.Text>Here is a finished Document</Card.Text>
+                    <Card.Text>For: {doc.username}</Card.Text>
                     <Link to={`/document/${doc.udoc_id}`}>View</Link>
                 </Card.Body>
                 
