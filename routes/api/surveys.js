@@ -123,9 +123,9 @@ const processIntakeForm = (userResponses, usurveyid, userSubmission_id) => {
         "phone" : userResponses.phone,
         "citizen" : userResponses.citizen,
         "dob" : userResponses.dob,
-        "emergency_name" : userResponses.emergency_contact.first_name + " " + userResponses.emergency_contact.last_name,
-        "emergency_phone" : userResponses.emergency_contact.e_phone,
-        "emergency_relationship" : userResponses.emergency_contact.relationship,
+        "emergency_name" : userResponses.emergencyContact.firstName + " " + userResponses.emergencyContact.lastName,
+        "emergency_phone" : userResponses.emergencyContact.emergencyPhone,
+        "emergency_relationship" : userResponses.emergencyContact.relationship,
         //TODO update form_status for every submission
         /*$push : {"active_forms" : { 
             form_id : newUserSubmission._id,
@@ -158,7 +158,7 @@ const processIntakeForm = (userResponses, usurveyid, userSubmission_id) => {
             $push : {"active_forms" : {
                 form_id: attorneyForm._id, //
                 userform_id : userSubmission_id, //For which user
-                user_name: userResponses.legal_name.first_name + " " + userResponses.legal_name.last_name,
+                user_name: userResponses.legalName.firstName + " " + userResponses.legalName.lastName,
                 surveyid: 2,
                 form_status: "new"
             }}
