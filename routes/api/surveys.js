@@ -2,8 +2,9 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose'); //for casting to object id mongoose.Types.ObjectId()
+const axios = require('axios')
 
-
+require('dotenv').config()
 //Survey Model
 let Survey = require('../../models/surveys.model');
 let userSubmission = require('../../models/usersubmissions.model');
@@ -84,7 +85,7 @@ const sendEmail = (userResponses, toEmailAddress) => {
 
     const mailgun = require("mailgun-js");
     const DOMAIN = 'portal.bellripper.com'; 
-    const mg = mailgun({apiKey: "91dc585d7ea62bbce58e9a3e002a8f81-6ae2ecad-f03fc7ac", domain: DOMAIN});
+    const mg = mailgun({apiKey: process.env.MAILGUN_API_KEY, domain: DOMAIN});
 
     //Create email to send to admin
     firstName = "<tr><td>First Name</td><td>" + userResponses.legalName.firstName + "</td></tr>"
@@ -168,6 +169,45 @@ const processIntakeForm = (userResponses, usurveyid, userSubmission_id) => {
         })
     })
     .catch((err) => console.log(err + " :Some error occurred"))
+
+    //Create a new contact in Clio
+
+    const config = {
+        headers: { 
+            'Authorization' : `Bearer ${process.env.CLIO_ACCESS_TOKEN}`,
+            'Content-Type' : 'application/json'
+        }
+
+    }
+
+    //TODO figure out how to handle whether or not legalName.middleName exists
+    const clioData = {"data" : {
+		"first_name" : userResponses.legalName.firstName,
+		"last_name" : userResponses.legalName.lastName,
+		"type" : "Person",
+		"addresses" : [{
+			"name" : "Home",
+			"street" : userResponses.street,
+			"city" : userResponses.city,
+			"province" : userResponses.state,
+			"postal_code" : userResponses.zip,
+			"country" : "USA"
+		}],
+		"email_addresses" : [{
+			"address" : userResponses.email,
+			"name" : "Home",
+			"primary" : true
+		}],
+        "phone_numbers" : [{
+            "name" : "Home",
+            "number" : userResponses.phone,
+            "default_number" : true
+        }]
+	}}
+
+    axios.post('https://app.clio.com/api/v4/contacts.json', clioData, config)
+        .then(res => console.log(res))
+        .catch(err => console.log(err.response.data.error))
 
     //TODO error check and then send email
 }
