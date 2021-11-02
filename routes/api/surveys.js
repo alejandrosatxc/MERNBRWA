@@ -223,23 +223,172 @@ const processAttorneyForm = async (attorneyForm_id, usurveyid, userResponses) =>
     const intake_responses = await userSubmission.findById({ _id: intakeid})
         .then(userSubmission => userSubmission.userResponses)
         .catch(err => console.log("Error userSubmission not found " + err))
-    //Create new document using the userResponses from both attorney form and corressponding attorney form
+
+    //For username
+    const username = Object.values(intake_responses.legalName).join(' ')
+    
+    //Autofill LOR template
+    let requests = [
+        {
+            replaceAllText: {
+                containsText: {
+                    text: '{{client.legalName}}',
+                    matchCase: true,
+                },
+                replaceText: username,
+            },
+        },
+        {
+            replaceAllText: {
+                containsText: {
+                    text: '{{client.street}}',
+                    matchCase: true,
+                },
+                replaceText: intake_responses.street,
+            },
+        },
+        {
+            replaceAllText: {
+                containsText: {
+                    text: '{{client.city}}',
+                    matchCase: true,
+                },
+                replaceText: intake_responses.city,
+            },
+        },
+        {
+            replaceAllText: {
+                containsText: {
+                    text: '{{client.state}}',
+                    matchCase: true,
+                },
+                replaceText: intake_responses.state,
+            },
+        },
+        {
+            replaceAllText: {
+                containsText: {
+                    text: '{{client.zip}}',
+                    matchCase: true,
+                },
+                replaceText: String(intake_responses.zip)
+            },
+        },
+        {
+            replaceAllText: {
+                containsText: {
+                    text: '{{client.email}}',
+                    matchCase: true,
+                },
+                replaceText: intake_responses.email,
+            },
+        },
+        {
+            replaceAllText: {
+                containsText: {
+                    text: '{{client.firstName}}',
+                    matchCase: true,
+                },
+                replaceText: intake_responses.legalName.firstName,
+            },
+        },
+        {
+            replaceAllText: {
+                containsText: {
+                    text: '{{Matter.legalService}}',
+                    matchCase: true,
+                },
+                replaceText: userResponses.repStatement,
+            },
+        },
+        {
+            replaceAllText: {
+                containsText: {
+                    text: '{{attorney.name}}',
+                    matchCase: true,
+                },
+                replaceText: 'Hilary Bell',
+            },
+        },
+        {
+            replaceAllText: {
+                containsText: {
+                    text: '{{attorney.email}}',
+                    matchCase: true,
+                },
+                replaceText: 'hilary@bellripper.com',
+            },
+        },
+        {
+            replaceAllText: {
+                containsText: {
+                    text: '{{flatfee}}',
+                    matchCase: true,
+                },
+                replaceText: "$" + String(userResponses.totalFee),
+            },
+        },
+        {
+            replaceAllText: {
+                containsText: {
+                    text: '{{repAmount}}',
+                    matchCase: true,
+                },
+                replaceText: "$" + String(userResponses.repAmount),
+            },
+        },
+    ]
+    var LOR_title = username + " Letters of Representation"
+
+    const { google } = require("googleapis")
+
+    const auth = new google.auth.GoogleAuth({
+        keyFile : "credentials.json",
+        scopes : [
+            "https://www.googleapis.com/auth/drive",
+            "https://www.googleapis.com/auth/documents"
+        ] 
+    })
+
+    //Creat client instance for auth
+    const client = await auth.getClient()
+    const documentId = '1SeFPhxCIG1BZHWG_wg_7V3r-XV5WPHt7xav-gEpxuJk'
+    // Instance of Google Sheets and Drive API
+    const gDrive = google.drive({version: "v3", auth: client})
+    const gDocs = google.docs({ version: "v1", auth: client})
+    //Copy the LOR template, store the copy in folder ID defined by 'parents'
+    const templateLOR = await gDrive.files.copy({auth, name: username + " LOR", parents: ['1Udp0lDeFekP-N3xG_pIjnC6B14lHnXAR'], fileId: documentId})
+    //Autofill fields in the newly created document
+    const result = await gDocs.documents.batchUpdate(
+        {
+            documentId : templateLOR.data.id,
+            resource: {
+                requests
+            }
+        })
+        .then(res => {
+            //console.log(res.data)
+            return res
+        })
+        .catch(err => console.log('The API returned an error: ' + err))
+
+    //Create new document in mongoDB using the userResponses from both attorney form and corressponding attorney form
     const LOR = new Document ({
         uuid: usurveyid, //admins id
+        googleDocId: result.data.documentId,
         fields: {
             intakeForm : intake_responses,
             attorneyForm :  userResponses
         }
     })
 
-    //For username
-    const username = Object.values(intake_responses.legalName).join(' ')
-    //Save form to DB
+    //Save document to DB
     LOR.save()
         .then(() => {
             //Update admins list of documents
             User.findByIdAndUpdate("6167616de9a3793f62eb325e", { //admin id
                 $push : { "user_documents" : {
+                    googleDocId: result.data.documentId,
                     udoc_id: LOR._id,
                     name: "Letters of Representation",
                     username: username
@@ -251,7 +400,7 @@ const processAttorneyForm = async (attorneyForm_id, usurveyid, userResponses) =>
                     console.log("result here" + res)
                 }
             })
-        })    
+        })
 }
 
 module.exports = router;
