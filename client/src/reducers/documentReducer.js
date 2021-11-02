@@ -2,10 +2,14 @@ import {
     DOCUMENT_LOADING,
     DOCUMENT_LOADED,
     DOCUMENT_FAIL,
-    CLEAR_DOCUMENT
+    CLEAR_DOCUMENT,
+    DOCUMENT_DOWNLOADING,
+    DOCUMENT_DOWNLOADED,
+    DOCUMENT_DOWNLOAD_FAIL
 } from '../actions/types'
 
 const initialState = {
+    documentIsDownloading: false,
     documentIsLoading: false,
     document: null,
 }
@@ -28,6 +32,21 @@ export default function(state = initialState, action) {
                 ...state,
                 documentIsLoading: false,
                 document: null
+            }
+        case DOCUMENT_DOWNLOADING:
+            return {
+                ...state,
+                documentIsDownloading: true
+            }
+        case DOCUMENT_DOWNLOADED:
+            return { 
+                ...state,
+                documentIsDownloading: false
+            }
+        case DOCUMENT_DOWNLOAD_FAIL:
+            return { 
+                ...state,
+                documentIsDownloading: false
             }
         case CLEAR_DOCUMENT:
             return {
