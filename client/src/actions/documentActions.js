@@ -37,12 +37,12 @@ export const downloadDocument = (googleDocId) => (dispatch) => {
                 payload: res.data
             })
  
-             const url = window.URL.createObjectURL(new Blob([res.data]), {type: 'application/pdf'})
-             const link = document.createElement('a')
-             link.href = url;
-             link.setAttribute('download', 'LOR.pdf')
-             document.body.appendChild(link)
-             link.click()
+            const url = window.URL.createObjectURL(new Blob([res.data]), {type: 'application/pdf'})
+            const link = document.createElement('a')
+            link.href = url;
+            link.setAttribute('download', 'LOR.pdf')
+            document.body.appendChild(link)
+            link.click()
             
         })
         .catch(err => {
