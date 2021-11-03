@@ -30,11 +30,21 @@ export const loadDocument = (document_id) => (dispatch) => {
 export const downloadDocument = (googleDocId) => (dispatch) => {
     dispatch({ type: DOCUMENT_DOWNLOADING })
 
-    axios.get('/api/documents/download?googleDocId=' + googleDocId)
-        .then(res => dispatch({
-            type: DOCUMENT_DOWNLOADED,
-            payload: res.data
-        }))
+    axios.get('/api/documents/download?googleDocId=' + googleDocId, {responseType: 'arraybuffer'})
+        .then(res => {
+            dispatch({
+                type: DOCUMENT_DOWNLOADED,
+                payload: res.data
+            })
+ 
+             const url = window.URL.createObjectURL(new Blob([res.data]), {type: 'application/pdf'})
+             const link = document.createElement('a')
+             link.href = url;
+             link.setAttribute('download', 'LOR.pdf')
+             document.body.appendChild(link)
+             link.click()
+            
+        })
         .catch(err => {
             dispatch(returnErrors(err.response.data, err.response.status))
             dispatch({ type: DOCUMENT_DOWNLOAD_FAIL })
