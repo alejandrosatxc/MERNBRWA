@@ -357,7 +357,7 @@ const processAttorneyForm = async (attorneyForm_id, usurveyid, userResponses) =>
     const gDrive = google.drive({version: "v3", auth: client})
     const gDocs = google.docs({ version: "v1", auth: client})
     //Copy the LOR template, store the copy in folder ID defined by 'parents'
-    const templateLOR = await gDrive.files.copy({auth, name: username + " LOR", parents: ['1Udp0lDeFekP-N3xG_pIjnC6B14lHnXAR'], fileId: documentId})
+    const templateLOR = await gDrive.files.copy({auth, name: LOR_title, parents: ['1Udp0lDeFekP-N3xG_pIjnC6B14lHnXAR'], fileId: documentId})
     //Autofill fields in the newly created document
     const result = await gDocs.documents.batchUpdate(
         {
