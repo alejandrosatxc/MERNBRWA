@@ -341,7 +341,7 @@ const processAttorneyForm = async (attorneyForm_id, usurveyid, userResponses) =>
     var LOR_title = username + " Letters of Representation"
 
     const { google } = require("googleapis")
-
+    //TODO might need to restrict permissons here to only read files
     const auth = new google.auth.GoogleAuth({
         keyFile : "credentials.json",
         scopes : [
@@ -350,9 +350,9 @@ const processAttorneyForm = async (attorneyForm_id, usurveyid, userResponses) =>
         ] 
     })
 
-    //Creat client instance for auth
+    //Create client instance for auth
     const client = await auth.getClient()
-    const documentId = '1SeFPhxCIG1BZHWG_wg_7V3r-XV5WPHt7xav-gEpxuJk'
+    const documentId = '1SeFPhxCIG1BZHWG_wg_7V3r-XV5WPHt7xav-gEpxuJk' //This is the ID of the LOR template
     // Instance of Google Sheets and Drive API
     const gDrive = google.drive({version: "v3", auth: client})
     const gDocs = google.docs({ version: "v1", auth: client})
